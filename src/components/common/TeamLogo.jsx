@@ -11,7 +11,7 @@ export default function TeamLogo({
     teamName,
     size = 'default',
     className = '',
-    primaryColor = '#003B5C' // Default to Titans navy
+    primaryColor = '#061649' // Default to Titans navy
 }) {
     const [imageError, setImageError] = useState(false);
     const [imageLoading, setImageLoading] = useState(true);

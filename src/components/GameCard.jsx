@@ -4,8 +4,9 @@ import TeamLogo from './common/TeamLogo';
 /**
  * GameCard Component - Clean Athletic Schedule Row
  * Horizontal layout: Date | Opponent Logo & Info | Home/Away Badge | Time
+ * Supports variant prop for different section backgrounds
  */
-export default function GameCard({ game }) {
+export default function GameCard({ game, variant = 'default' }) {
     const gameDate = parseISO(game.date);
     const month = format(gameDate, 'MMM').toUpperCase();
     const day = format(gameDate, 'd').padStart(2, '0');
@@ -43,33 +44,43 @@ export default function GameCard({ game }) {
     // Location - use stadium_name from the game or fallback to location field
     const locationText = game.stadium_name || game.location || (isHome ? 'Shaler Stadium' : 'Away');
 
+    // Variant-specific styling
+    const isRedSection = variant === 'red-section';
+
     return (
         <div
-            className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 group relative overflow-hidden"
+            className={`rounded-xl transition-all duration-300 group relative overflow-hidden ${isRedSection
+                    ? 'bg-white/95 backdrop-blur-sm shadow-lg hover:shadow-xl border border-white/20'
+                    : 'bg-white shadow-sm hover:shadow-lg'
+                }`}
         >
             {/* Subtle left accent using opponent's team color */}
             <div
                 className="absolute left-0 top-0 bottom-0 w-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{ backgroundColor: opponentColor }}
+                style={{ backgroundColor: isRedSection ? '#061649' : opponentColor }}
             />
 
             <div className="flex items-center px-6 py-5 md:px-8 md:py-6">
                 {/* Date Section */}
                 <div className="flex-shrink-0 text-center w-16 md:w-20">
-                    <span className="block text-xs font-semibold text-red tracking-widest uppercase">
+                    <span className={`block text-xs font-semibold tracking-widest uppercase ${isRedSection ? 'text-red' : 'text-red'
+                        }`}>
                         {month}
                     </span>
                     <span className="block font-bebas text-4xl md:text-5xl text-navy leading-none">
                         {day}
                     </span>
-                    <span className="block text-xs text-gray-500 capitalize">
+                    <span className={`block text-xs capitalize ${isRedSection ? 'text-navy/60' : 'text-gray-500'
+                        }`}>
                         {weekday}
                     </span>
                 </div>
 
                 {/* Vertical Divider */}
-                <div className="hidden md:block w-px h-16 bg-gray-200 mx-6 flex-shrink-0" />
-                <div className="md:hidden w-px h-12 bg-gray-200 mx-4 flex-shrink-0" />
+                <div className={`hidden md:block w-px h-16 mx-6 flex-shrink-0 ${isRedSection ? 'bg-navy/10' : 'bg-gray-200'
+                    }`} />
+                <div className={`md:hidden w-px h-12 mx-4 flex-shrink-0 ${isRedSection ? 'bg-navy/10' : 'bg-gray-200'
+                    }`} />
 
                 {/* Opponent Logo & Info */}
                 <div className="flex items-center gap-4 flex-1 min-w-0">
@@ -91,7 +102,8 @@ export default function GameCard({ game }) {
                         <div className="flex items-center gap-2 mt-1">
                             {/* Location Icon (SVG) */}
                             <svg
-                                className="w-3.5 h-3.5 text-gray-400 flex-shrink-0"
+                                className={`w-3.5 h-3.5 flex-shrink-0 ${isRedSection ? 'text-navy/40' : 'text-gray-400'
+                                    }`}
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
@@ -100,7 +112,8 @@ export default function GameCard({ game }) {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
-                            <span className="text-sm text-gray-500 truncate">
+                            <span className={`text-sm truncate ${isRedSection ? 'text-navy/60' : 'text-gray-500'
+                                }`}>
                                 {locationText}
                                 {game.notes && (
                                     <span className="text-red"> • {game.notes}</span>
@@ -115,7 +128,9 @@ export default function GameCard({ game }) {
                     <span
                         className={`inline-flex items-center justify-center px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${isHome
                                 ? 'bg-navy text-white'
-                                : 'bg-transparent border-2 border-red/30 text-red'
+                                : isRedSection
+                                    ? 'bg-transparent border-2 border-navy/20 text-navy'
+                                    : 'bg-transparent border-2 border-red/30 text-red'
                             }`}
                     >
                         {isHome ? 'HOME' : 'AWAY'}

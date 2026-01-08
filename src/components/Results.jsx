@@ -80,8 +80,8 @@ export default function Results() {
     const titansTeam = latestResult.home || {
         name: 'Shaler Area Titans',
         logo_url: null,
-        primary_color: '#C8102E',
-        secondary_color: '#003B5C'
+        primary_color: '#ad1d34',
+        secondary_color: '#061649'
     };
 
     const opponentTeam = latestResult.opponent || {
@@ -92,7 +92,7 @@ export default function Results() {
     };
 
     // Get team colors
-    const titansColor = titansTeam.primary_color || '#C8102E';
+    const titansColor = titansTeam.primary_color || '#ad1d34';
     const opponentColor = opponentTeam.primary_color || '#666666';
     const winColor = '#10B981';
     const lossColor = '#EF4444';
@@ -120,7 +120,7 @@ export default function Results() {
             <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
-                    background: 'linear-gradient(135deg, rgba(0, 59, 92, 0.95) 0%, rgba(200, 16, 46, 0.15) 50%, rgba(0, 59, 92, 0.9) 100%)',
+                    background: 'linear-gradient(135deg, rgba(6, 22, 73, 0.95) 0%, rgba(173, 29, 52, 0.15) 50%, rgba(6, 22, 73, 0.9) 100%)',
                     mixBlendMode: 'color'
                 }}
             />

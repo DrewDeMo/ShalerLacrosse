@@ -7,12 +7,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        navy: '#07174a',
+        navy: '#061649',
         red: {
-          DEFAULT: '#c02031',
-          600: '#a01828',
+          DEFAULT: '#ad1d34',
+          600: '#8a1729',
+          light: '#c92744',
         },
-        'red-glow': 'rgba(192, 32, 49, 0.4)',
+        'red-glow': 'rgba(173, 29, 52, 0.4)',
         'off-white': '#f8f9fc',
       },
       fontFamily: {

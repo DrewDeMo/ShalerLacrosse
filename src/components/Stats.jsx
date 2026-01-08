@@ -105,10 +105,10 @@ const StatCard = ({ icon: Icon, number, label, index, accentColor = 'red' }) => 
             ref={cardRef}
             className="group relative"
         >
-            {/* Card background with glassmorphism */}
-            <div className="relative bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-sm rounded-xl p-4 lg:p-5 border border-white/[0.08] overflow-hidden transition-all duration-500 hover:border-red/30 hover:shadow-[0_0_20px_rgba(192,32,49,0.15)]">
+            {/* Card background - light theme */}
+            <div className="relative bg-white rounded-xl p-4 lg:p-5 border border-navy/[0.08] overflow-hidden transition-all duration-500 hover:border-red/30 hover:shadow-[0_8px_30px_rgba(6,22,73,0.12)]">
                 {/* Diagonal accent stripe */}
-                <div className="absolute -top-8 -right-8 w-16 h-16 bg-gradient-to-br from-red/20 to-transparent rotate-45 transition-all duration-500 group-hover:scale-150 group-hover:from-red/30" />
+                <div className="absolute -top-8 -right-8 w-16 h-16 bg-gradient-to-br from-red/10 to-transparent rotate-45 transition-all duration-500 group-hover:scale-150 group-hover:from-red/20" />
 
                 {/* Icon container */}
                 <div className="relative z-10 inline-flex items-center justify-center w-9 h-9 rounded-lg bg-red/10 text-red mb-3 transition-all duration-300 group-hover:bg-red/20 group-hover:scale-110">
@@ -117,7 +117,7 @@ const StatCard = ({ icon: Icon, number, label, index, accentColor = 'red' }) => 
 
                 {/* Number with animated glow */}
                 <div className="relative z-10">
-                    <div className="font-bebas text-4xl lg:text-5xl text-white leading-none mb-1 transition-all duration-300 group-hover:text-red">
+                    <div className="font-bebas text-4xl lg:text-5xl text-navy leading-none mb-1 transition-all duration-300 group-hover:text-red">
                         <AnimatedCounter value={number} />
                     </div>
 
@@ -129,14 +129,14 @@ const StatCard = ({ icon: Icon, number, label, index, accentColor = 'red' }) => 
 
                 {/* Label with animated underline */}
                 <div className="relative z-10 mt-1">
-                    <div className="text-[10px] uppercase tracking-[0.12em] text-white/50 font-medium">
+                    <div className="text-[10px] uppercase tracking-[0.12em] text-navy/50 font-medium">
                         {label}
                     </div>
                     <div className="h-px w-0 bg-gradient-to-r from-red to-red/50 mt-1.5 transition-all duration-500 group-hover:w-full" />
                 </div>
 
                 {/* Corner decoration */}
-                <div className="absolute bottom-2 right-2 w-6 h-6 border-r border-b border-white/[0.06] rounded-br-lg transition-colors duration-300 group-hover:border-red/20" />
+                <div className="absolute bottom-2 right-2 w-6 h-6 border-r border-b border-navy/[0.06] rounded-br-lg transition-colors duration-300 group-hover:border-red/20" />
             </div>
         </div>
     );
@@ -181,8 +181,8 @@ export default function Stats() {
         return (
             <section className="relative py-16 lg:py-20 px-6 lg:px-12 overflow-hidden">
                 {/* Background */}
-                <div className="absolute inset-0 bg-gradient-to-b from-navy via-navy/95 to-navy" />
-                <div className="relative z-10 max-w-7xl mx-auto text-center text-white/60">
+                <div className="absolute inset-0 bg-gradient-to-b from-off-white via-white to-off-white" />
+                <div className="relative z-10 max-w-7xl mx-auto text-center text-navy/60">
                     <div className="inline-flex items-center gap-3">
                         <div className="w-5 h-5 border-2 border-red/50 border-t-red rounded-full animate-spin" />
                         Loading season stats...
@@ -197,53 +197,38 @@ export default function Stats() {
             ref={sectionRef}
             className="relative py-16 lg:py-24 px-6 lg:px-12 overflow-hidden"
         >
-            {/* Dynamic gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-navy via-[#0a1d4a] to-navy" />
+            {/* Light gradient background */}
+            <div className="absolute inset-0 bg-gradient-to-b from-off-white via-white to-off-white" />
 
-            {/* Net texture background with duotone effect */}
+            {/* Net texture background with light duotone effect */}
             <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
                     backgroundImage: 'url(/net_closeup.webp)',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    filter: 'grayscale(100%) contrast(1.4) brightness(0.9)',
-                    opacity: 0.06,
-                    mixBlendMode: 'screen'
-                }}
-            />
-            {/* Navy/Red duotone color overlay for net */}
-            <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                    background: 'linear-gradient(180deg, rgba(0, 59, 92, 0.85) 0%, rgba(200, 16, 46, 0.12) 40%, rgba(10, 29, 74, 0.9) 100%)',
+                    filter: 'grayscale(100%) contrast(1.2) brightness(1.1)',
+                    opacity: 0.04,
                     mixBlendMode: 'multiply'
                 }}
             />
-            {/* Radial vignette to fade edges and focus center */}
-            <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                    background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0, 36, 54, 0.7) 65%, rgba(0, 36, 54, 0.98) 100%)'
-                }}
-            />
 
-            {/* Animated gradient orbs */}
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-red/10 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '4s' }} />
-            <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-red/5 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '6s', animationDelay: '2s' }} />
+            {/* Subtle decorative orbs */}
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-red/5 rounded-full blur-[120px]" />
+            <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-navy/5 rounded-full blur-[100px]" />
 
             {/* Grid pattern overlay */}
             <div
-                className="absolute inset-0 opacity-[0.03]"
+                className="absolute inset-0 opacity-[0.02]"
                 style={{
-                    backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+                    backgroundImage: `linear-gradient(rgba(6,22,73,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(6,22,73,0.1) 1px, transparent 1px)`,
                     backgroundSize: '50px 50px'
                 }}
             />
 
             {/* Top and bottom decorative lines */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red/30 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-navy/10 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red/20 to-transparent" />
 
             <div className="relative z-10 max-w-7xl mx-auto">
                 {/* Section Header */}
@@ -252,10 +237,10 @@ export default function Stats() {
                         <span className="w-1.5 h-1.5 bg-red rounded-full animate-pulse" />
                         Season Statistics
                     </div>
-                    <h2 className="font-bebas text-4xl lg:text-5xl text-white tracking-tight">
+                    <h2 className="font-bebas text-4xl lg:text-5xl text-navy tracking-tight">
                         By The <span className="text-red">Numbers</span>
                     </h2>
-                    <p className="text-white/50 text-sm mt-3 max-w-md mx-auto">
+                    <p className="text-navy/50 text-sm mt-3 max-w-md mx-auto">
                         Track our team's performance throughout the season
                     </p>
                 </div>
@@ -275,10 +260,10 @@ export default function Stats() {
 
                 {/* Bottom accent */}
                 <div className="flex justify-center mt-12 lg:mt-16">
-                    <div className="flex items-center gap-4 text-white/30 text-xs uppercase tracking-widest">
-                        <div className="w-12 h-px bg-gradient-to-r from-transparent to-white/20" />
+                    <div className="flex items-center gap-4 text-navy/30 text-xs uppercase tracking-widest">
+                        <div className="w-12 h-px bg-gradient-to-r from-transparent to-navy/20" />
                         <span>Updated in Real-Time</span>
-                        <div className="w-12 h-px bg-gradient-to-l from-transparent to-white/20" />
+                        <div className="w-12 h-px bg-gradient-to-l from-transparent to-navy/20" />
                     </div>
                 </div>
             </div>

@@ -92,15 +92,13 @@ const PlayerCard = ({ player, index }) => {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            {/* Card with glassmorphism */}
+            {/* Card with light theme styling */}
             <div
-                className="relative rounded-2xl overflow-hidden h-full transition-all duration-500"
+                className="relative rounded-2xl overflow-hidden h-full transition-all duration-500 bg-white"
                 style={{
-                    background: 'linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02))',
-                    backdropFilter: 'blur(20px)',
                     boxShadow: isHovered
-                        ? '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(200, 16, 46, 0.15), inset 0 1px 1px rgba(255,255,255,0.1)'
-                        : '0 10px 40px -10px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255,255,255,0.05)',
+                        ? '0 25px 50px -12px rgba(6, 22, 73, 0.2), 0 0 40px rgba(173, 29, 52, 0.1)'
+                        : '0 4px 20px -4px rgba(6, 22, 73, 0.08)',
                     transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
                 }}
             >
@@ -109,7 +107,7 @@ const PlayerCard = ({ player, index }) => {
                     className="absolute inset-0 rounded-2xl transition-opacity duration-500"
                     style={{
                         padding: '1px',
-                        background: 'linear-gradient(135deg, rgba(200, 16, 46, 0.5), transparent 40%, rgba(0, 59, 92, 0.5))',
+                        background: 'linear-gradient(135deg, rgba(173, 29, 52, 0.5), transparent 40%, rgba(6, 22, 73, 0.5))',
                         WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
                         WebkitMaskComposite: 'xor',
                         maskComposite: 'exclude',
@@ -122,13 +120,13 @@ const PlayerCard = ({ player, index }) => {
                     className="absolute top-0 left-0 right-0 h-1 transition-all duration-500"
                     style={{
                         background: isHovered
-                            ? 'linear-gradient(90deg, #C8102E, #C8102E80, transparent)'
-                            : 'linear-gradient(90deg, rgba(200, 16, 46, 0.3), transparent)'
+                            ? 'linear-gradient(90deg, #ad1d34, #ad1d3480, transparent)'
+                            : 'linear-gradient(90deg, rgba(173, 29, 52, 0.3), transparent)'
                     }}
                 />
 
                 {/* Player Photo Section */}
-                <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-b from-navy/20 to-navy/40">
+                <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-b from-navy/10 to-navy/30">
                     {player.photo_url ? (
                         <>
                             <img
@@ -151,7 +149,7 @@ const PlayerCard = ({ player, index }) => {
                             <div
                                 className="absolute inset-0 opacity-10"
                                 style={{
-                                    backgroundImage: `linear-gradient(45deg, #C8102E 25%, transparent 25%), linear-gradient(-45deg, #C8102E 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #C8102E 75%), linear-gradient(-45deg, transparent 75%, #C8102E 75%)`,
+                                    backgroundImage: `linear-gradient(45deg, #ad1d34 25%, transparent 25%), linear-gradient(-45deg, #ad1d34 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ad1d34 75%), linear-gradient(-45deg, transparent 75%, #ad1d34 75%)`,
                                     backgroundSize: '20px 20px',
                                     backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px'
                                 }}
@@ -161,10 +159,10 @@ const PlayerCard = ({ player, index }) => {
                                 <div
                                     className="w-28 h-28 rounded-full flex items-center justify-center transition-all duration-500"
                                     style={{
-                                        background: 'linear-gradient(135deg, #C8102E, #8a0b1f)',
+                                        background: 'linear-gradient(135deg, #ad1d34, #8a1729)',
                                         boxShadow: isHovered
-                                            ? '0 0 60px rgba(200, 16, 46, 0.5), inset 0 2px 10px rgba(255,255,255,0.2)'
-                                            : '0 0 30px rgba(200, 16, 46, 0.3), inset 0 2px 10px rgba(255,255,255,0.1)'
+                                            ? '0 0 60px rgba(173, 29, 52, 0.5), inset 0 2px 10px rgba(255,255,255,0.2)'
+                                            : '0 0 30px rgba(173, 29, 52, 0.3), inset 0 2px 10px rgba(255,255,255,0.1)'
                                     }}
                                 >
                                     <span className="font-bebas text-5xl text-white tracking-wider">
@@ -176,7 +174,7 @@ const PlayerCard = ({ player, index }) => {
                             <div
                                 className="absolute inset-0"
                                 style={{
-                                    background: 'linear-gradient(180deg, transparent 50%, rgba(0, 36, 54, 0.9) 100%)'
+                                    background: 'linear-gradient(180deg, transparent 50%, rgba(6, 22, 73, 0.9) 100%)'
                                 }}
                             />
                         </div>
@@ -193,9 +191,9 @@ const PlayerCard = ({ player, index }) => {
                             <div
                                 className="w-14 h-14 rounded-xl flex items-center justify-center relative"
                                 style={{
-                                    background: 'linear-gradient(135deg, #C8102E, #8a0b1f)',
+                                    background: 'linear-gradient(135deg, #ad1d34, #8a1729)',
                                     boxShadow: isHovered
-                                        ? '0 10px 30px rgba(200, 16, 46, 0.5), inset 0 2px 4px rgba(255,255,255,0.2)'
+                                        ? '0 10px 30px rgba(173, 29, 52, 0.5), inset 0 2px 4px rgba(255,255,255,0.2)'
                                         : '0 4px 15px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255,255,255,0.1)'
                                 }}
                             >
@@ -227,12 +225,12 @@ const PlayerCard = ({ player, index }) => {
                 </div>
 
                 {/* Player Info Section */}
-                <div className="relative p-5">
+                <div className="relative p-5 bg-white">
                     {/* Name with hover effect */}
                     <div className="mb-3">
                         <h3
                             className="font-bebas text-2xl tracking-wide transition-colors duration-300"
-                            style={{ color: isHovered ? '#C8102E' : 'white' }}
+                            style={{ color: isHovered ? '#ad1d34' : '#061649' }}
                         >
                             {player.first_name} {player.last_name}
                         </h3>
@@ -246,10 +244,10 @@ const PlayerCard = ({ player, index }) => {
                     {/* Grade / Class Year */}
                     {player.grade && (
                         <div className="flex items-center gap-2 mb-3">
-                            <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
+                            <div className="w-6 h-6 rounded-full bg-navy/10 flex items-center justify-center">
                                 <Award className="w-3.5 h-3.5 text-red" />
                             </div>
-                            <span className="text-sm text-white/60">
+                            <span className="text-sm text-navy/60">
                                 {getClassName(player.grade)}
                             </span>
                         </div>
@@ -258,8 +256,8 @@ const PlayerCard = ({ player, index }) => {
                     {/* Bio preview */}
                     {player.bio && (
                         <p
-                            className="text-sm text-white/50 line-clamp-2 transition-colors duration-300"
-                            style={{ color: isHovered ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.5)' }}
+                            className="text-sm line-clamp-2 transition-colors duration-300"
+                            style={{ color: isHovered ? 'rgba(6,22,73,0.8)' : 'rgba(6,22,73,0.5)' }}
                         >
                             {player.bio}
                         </p>
@@ -270,7 +268,7 @@ const PlayerCard = ({ player, index }) => {
                         <div
                             className="w-8 h-8 rounded-lg transition-all duration-500"
                             style={{
-                                border: '1px solid rgba(255,255,255,0.06)',
+                                border: '1px solid rgba(6,22,73,0.06)',
                                 borderTopColor: 'transparent',
                                 borderLeftColor: 'transparent',
                                 opacity: isHovered ? 0.5 : 0.2,
@@ -320,13 +318,13 @@ const FilterButton = ({ label, isActive, onClick, index }) => {
                 className="px-6 py-3 rounded-full font-semibold text-sm uppercase tracking-wider transition-all duration-300 relative overflow-hidden"
                 style={{
                     background: isActive
-                        ? 'linear-gradient(135deg, #C8102E, #8a0b1f)'
-                        : 'rgba(255, 255, 255, 0.05)',
-                    color: isActive ? 'white' : 'rgba(255, 255, 255, 0.6)',
+                        ? 'linear-gradient(135deg, #ad1d34, #8a1729)'
+                        : 'white',
+                    color: isActive ? 'white' : 'rgba(6, 22, 73, 0.6)',
                     boxShadow: isActive
-                        ? '0 10px 30px rgba(200, 16, 46, 0.3), inset 0 1px 1px rgba(255,255,255,0.2)'
-                        : 'inset 0 1px 1px rgba(255,255,255,0.05)',
-                    border: isActive ? 'none' : '1px solid rgba(255, 255, 255, 0.1)',
+                        ? '0 10px 30px rgba(173, 29, 52, 0.3), inset 0 1px 1px rgba(255,255,255,0.2)'
+                        : '0 2px 8px rgba(6, 22, 73, 0.08)',
+                    border: isActive ? 'none' : '1px solid rgba(6, 22, 73, 0.1)',
                 }}
             >
                 {/* Hover glow */}
@@ -334,7 +332,7 @@ const FilterButton = ({ label, isActive, onClick, index }) => {
                     <div
                         className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                         style={{
-                            background: 'linear-gradient(135deg, rgba(200, 16, 46, 0.2), transparent)',
+                            background: 'linear-gradient(135deg, rgba(173, 29, 52, 0.1), transparent)',
                         }}
                     />
                 )}
@@ -437,8 +435,8 @@ export default function Roster() {
             id="roster"
             className="relative py-24 px-6 lg:px-12 overflow-hidden"
         >
-            {/* Premium dark background with gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-navy via-[#0a1d4a] to-navy" />
+            {/* Light background with gradient */}
+            <div className="absolute inset-0 bg-gradient-to-b from-off-white via-white to-off-white" />
 
             {/* Lacrosse crosse & ball texture overlay */}
             <div
@@ -447,49 +445,38 @@ export default function Roster() {
                     backgroundImage: 'url(/crosse&ball.webp)',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    filter: 'grayscale(100%) contrast(1.2) brightness(0.85)',
+                    filter: 'grayscale(100%) contrast(1.2) brightness(1.1)',
                     opacity: 0.03,
-                    mixBlendMode: 'screen'
-                }}
-            />
-
-            {/* Navy/Red duotone color overlay */}
-            <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                    background: 'linear-gradient(180deg, rgba(0, 59, 92, 0.9) 0%, rgba(200, 16, 46, 0.08) 50%, rgba(10, 29, 74, 0.95) 100%)',
                     mixBlendMode: 'multiply'
                 }}
             />
 
-            {/* Animated gradient orbs */}
+            {/* Subtle decorative orbs */}
             <div
-                className="absolute top-1/4 -left-32 w-96 h-96 bg-red/10 rounded-full blur-[150px] animate-pulse"
-                style={{ animationDuration: '5s' }}
+                className="absolute top-1/4 -left-32 w-96 h-96 bg-red/5 rounded-full blur-[150px]"
             />
             <div
-                className="absolute bottom-1/4 -right-32 w-80 h-80 bg-red/5 rounded-full blur-[120px] animate-pulse"
-                style={{ animationDuration: '7s', animationDelay: '2s' }}
+                className="absolute bottom-1/4 -right-32 w-80 h-80 bg-navy/5 rounded-full blur-[120px]"
             />
 
             {/* Grid pattern overlay */}
             <div
                 className="absolute inset-0 opacity-[0.02]"
                 style={{
-                    backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+                    backgroundImage: `linear-gradient(rgba(6,22,73,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(6,22,73,0.1) 1px, transparent 1px)`,
                     backgroundSize: '60px 60px'
                 }}
             />
 
             {/* Watermark background text */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
-                <span className="font-bebas text-[25vw] text-white/[0.02] tracking-wider whitespace-nowrap">
+                <span className="font-bebas text-[25vw] text-navy/[0.02] tracking-wider whitespace-nowrap">
                     TITANS
                 </span>
             </div>
 
             {/* Top decorative line */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red/30 to-transparent" />
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-navy/10 to-transparent" />
 
             <div className="relative z-10 max-w-7xl mx-auto">
                 {/* Section Header - Athletic styling */}
@@ -504,10 +491,10 @@ export default function Roster() {
                         </div>
                     </div>
                     <div ref={titleRef}>
-                        <h2 className="font-bebas text-6xl md:text-7xl lg:text-8xl tracking-wide leading-none text-white">
+                        <h2 className="font-bebas text-6xl md:text-7xl lg:text-8xl tracking-wide leading-none text-navy">
                             2025 <span className="text-red">ROSTER</span>
                         </h2>
-                        <p className="text-white/50 text-sm mt-4 max-w-md">
+                        <p className="text-navy/50 text-sm mt-4 max-w-md">
                             The athletes representing Shaler Area this season
                         </p>
                     </div>
@@ -529,33 +516,33 @@ export default function Roster() {
                 {/* Player Slider */}
                 {filteredPlayers.length === 0 ? (
                     <div className="text-center py-16">
-                        <div className="inline-flex flex-col items-center gap-4 p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
-                            <User className="w-12 h-12 text-white/30" />
-                            <p className="text-white/60">No players found for this position.</p>
+                        <div className="inline-flex flex-col items-center gap-4 p-8 rounded-2xl bg-navy/5 border border-navy/10">
+                            <User className="w-12 h-12 text-navy/30" />
+                            <p className="text-navy/60">No players found for this position.</p>
                         </div>
                     </div>
                 ) : (
                     <div className="relative roster-slider">
                         {/* Custom Navigation Buttons */}
                         <button
-                            className="roster-prev absolute left-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 -ml-4 lg:-ml-7 hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed group"
+                            className="roster-prev absolute left-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 -ml-4 lg:-ml-7 hover:bg-navy/5 disabled:opacity-30 disabled:cursor-not-allowed group"
                             style={{
-                                background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
-                                backdropFilter: 'blur(10px)',
-                                border: '1px solid rgba(255,255,255,0.1)',
+                                background: 'white',
+                                boxShadow: '0 4px 15px rgba(6, 22, 73, 0.08)',
+                                border: '1px solid rgba(6, 22, 73, 0.1)',
                             }}
                         >
-                            <ChevronLeft className="w-6 h-6 text-white/70 group-hover:text-red transition-colors" />
+                            <ChevronLeft className="w-6 h-6 text-navy/70 group-hover:text-red transition-colors" />
                         </button>
                         <button
-                            className="roster-next absolute right-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 -mr-4 lg:-mr-7 hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed group"
+                            className="roster-next absolute right-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 -mr-4 lg:-mr-7 hover:bg-navy/5 disabled:opacity-30 disabled:cursor-not-allowed group"
                             style={{
-                                background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
-                                backdropFilter: 'blur(10px)',
-                                border: '1px solid rgba(255,255,255,0.1)',
+                                background: 'white',
+                                boxShadow: '0 4px 15px rgba(6, 22, 73, 0.08)',
+                                border: '1px solid rgba(6, 22, 73, 0.1)',
                             }}
                         >
-                            <ChevronRight className="w-6 h-6 text-white/70 group-hover:text-red transition-colors" />
+                            <ChevronRight className="w-6 h-6 text-navy/70 group-hover:text-red transition-colors" />
                         </button>
 
                         <Swiper
@@ -602,19 +589,19 @@ export default function Roster() {
 
                 {/* Bottom accent with player count */}
                 <div className="flex justify-center mt-8">
-                    <div className="flex items-center gap-4 text-white/30 text-xs uppercase tracking-widest">
-                        <div className="w-12 h-px bg-gradient-to-r from-transparent to-white/20" />
+                    <div className="flex items-center gap-4 text-navy/30 text-xs uppercase tracking-widest">
+                        <div className="w-12 h-px bg-gradient-to-r from-transparent to-navy/20" />
                         <span className="flex items-center gap-2">
                             <span className="text-red font-bold">{filteredPlayers.length}</span>
                             <span>Active Players</span>
                         </span>
-                        <div className="w-12 h-px bg-gradient-to-l from-transparent to-white/20" />
+                        <div className="w-12 h-px bg-gradient-to-l from-transparent to-navy/20" />
                     </div>
                 </div>
             </div>
 
             {/* Bottom decorative line */}
-            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red/20 to-transparent" />
         </section>
     );
 }

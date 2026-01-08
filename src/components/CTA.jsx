@@ -107,8 +107,8 @@ const CTACard = ({ card, index }) => {
                 style={{
                     background: 'white',
                     boxShadow: isHovered
-                        ? '0 25px 50px -12px rgba(0, 59, 92, 0.2), 0 0 0 1px rgba(200, 16, 46, 0.2)'
-                        : '0 4px 20px -4px rgba(0, 59, 92, 0.1), 0 0 0 1px rgba(0, 59, 92, 0.05)',
+                        ? '0 25px 50px -12px rgba(6, 22, 73, 0.2), 0 0 0 1px rgba(173, 29, 52, 0.2)'
+                        : '0 4px 20px -4px rgba(6, 22, 73, 0.1), 0 0 0 1px rgba(6, 22, 73, 0.05)',
                     transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
                 }}
             >
@@ -125,7 +125,7 @@ const CTACard = ({ card, index }) => {
                 <div
                     className="absolute -top-20 -right-20 w-40 h-40 rounded-full transition-all duration-500"
                     style={{
-                        background: isHovered ? 'rgba(200, 16, 46, 0.05)' : 'rgba(0, 59, 92, 0.03)',
+                        background: isHovered ? 'rgba(173, 29, 52, 0.05)' : 'rgba(6, 22, 73, 0.03)',
                     }}
                 />
 
@@ -137,7 +137,7 @@ const CTACard = ({ card, index }) => {
                             className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${card.accent} flex items-center justify-center transition-all duration-500`}
                             style={{
                                 transform: isHovered ? 'scale(1.1) rotate(-3deg)' : 'scale(1) rotate(0)',
-                                boxShadow: isHovered ? '0 10px 30px rgba(200, 16, 46, 0.3)' : '0 4px 15px rgba(0, 59, 92, 0.15)'
+                                boxShadow: isHovered ? '0 10px 30px rgba(173, 29, 52, 0.3)' : '0 4px 15px rgba(6, 22, 73, 0.15)'
                             }}
                         >
                             <div className="w-8 h-8 text-white">
@@ -166,7 +166,7 @@ const CTACard = ({ card, index }) => {
                     <div className="mb-6">
                         <h3
                             className="font-bebas text-2xl tracking-wide mb-2 transition-colors duration-300"
-                            style={{ color: isHovered ? '#C8102E' : '#003B5C' }}
+                            style={{ color: isHovered ? '#ad1d34' : '#061649' }}
                         >
                             {card.title}
                         </h3>
@@ -184,7 +184,7 @@ const CTACard = ({ card, index }) => {
                     <div
                         className="flex items-center gap-2 text-sm font-semibold transition-all duration-300"
                         style={{
-                            color: isHovered ? '#C8102E' : '#003B5C',
+                            color: isHovered ? '#ad1d34' : '#061649',
                         }}
                     >
                         <span className="uppercase tracking-wider text-xs">
@@ -205,7 +205,7 @@ const CTACard = ({ card, index }) => {
                 <div
                     className="absolute bottom-0 left-0 right-0 h-px transition-opacity duration-300"
                     style={{
-                        background: 'linear-gradient(90deg, transparent, rgba(200, 16, 46, 0.2), transparent)',
+                        background: 'linear-gradient(90deg, transparent, rgba(173, 29, 52, 0.2), transparent)',
                         opacity: isHovered ? 1 : 0
                     }}
                 />
@@ -249,7 +249,7 @@ export default function CTA() {
             <div
                 className="absolute inset-0 opacity-[0.015]"
                 style={{
-                    backgroundImage: `radial-gradient(circle at 1px 1px, #003B5C 1px, transparent 0)`,
+                    backgroundImage: `radial-gradient(circle at 1px 1px, #061649 1px, transparent 0)`,
                     backgroundSize: '32px 32px'
                 }}
             />
