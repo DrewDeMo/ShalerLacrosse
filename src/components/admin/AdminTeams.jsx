@@ -213,6 +213,7 @@ function TeamForm({ team, onClose, onSuccess }) {
         primary_color: team?.primary_color || '#000000',
         secondary_color: team?.secondary_color || '#FFFFFF',
         conference: team?.conference || '',
+        stadium: team?.stadium || '',
         notes: team?.notes || '',
     });
     const [loading, setLoading] = useState(false);
@@ -326,6 +327,19 @@ function TeamForm({ team, onClose, onSuccess }) {
                             value={formData.conference}
                             onChange={(e) => setFormData({ ...formData, conference: e.target.value })}
                             placeholder="WPIAL 3A"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors text-navy"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-navy mb-2">
+                            Home Stadium (optional)
+                        </label>
+                        <input
+                            type="text"
+                            value={formData.stadium}
+                            onChange={(e) => setFormData({ ...formData, stadium: e.target.value })}
+                            placeholder="Titan Stadium at Shaler Area High School"
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors text-navy"
                         />
                     </div>

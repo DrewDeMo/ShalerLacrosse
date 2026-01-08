@@ -182,6 +182,47 @@ function GameForm({ game, onClose, onSuccess }) {
         }
     }, []);
 
+    // Auto-populate location based on game type and teams
+    useEffect(() => {
+        const populateStadium = async () => {
+            try {
+                if (formData.game_type === 'home' && formData.home_team_id) {
+                    // Fetch home team's stadium
+                    const { data, error } = await supabase
+                        .from('teams')
+                        .select('stadium')
+                        .eq('id', formData.home_team_id)
+                        .single();
+
+                    if (error) throw error;
+                    if (data?.stadium) {
+                        setFormData(prev => ({ ...prev, location: data.stadium }));
+                    }
+                } else if (formData.game_type === 'away' && formData.opponent_team_id) {
+                    // Fetch opponent team's stadium
+                    const { data, error } = await supabase
+                        .from('teams')
+                        .select('stadium')
+                        .eq('id', formData.opponent_team_id)
+                        .single();
+
+                    if (error) throw error;
+                    if (data?.stadium) {
+                        setFormData(prev => ({ ...prev, location: data.stadium }));
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching stadium:', error);
+            }
+        };
+
+        // Only auto-populate if we're not editing an existing game
+        // or if the location field is empty
+        if (!game || !formData.location) {
+            populateStadium();
+        }
+    }, [formData.game_type, formData.opponent_team_id, formData.home_team_id]);
+
     const fetchHomeTeam = async () => {
         try {
             const { data, error } = await supabase
@@ -299,22 +340,6 @@ function GameForm({ game, onClose, onSuccess }) {
 
                     <div>
                         <label className="block text-sm font-medium text-navy mb-2">
-                            Location *
-                        </label>
-                        <input
-                            type="text"
-                            required
-                            value={formData.location}
-                            onChange={(e) =>
-                                setFormData({ ...formData, location: e.target.value })
-                            }
-                            placeholder="Titans Field"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors"
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium text-navy mb-2">
                             Game Type *
                         </label>
                         <div className="flex gap-4">
@@ -344,6 +369,13 @@ function GameForm({ game, onClose, onSuccess }) {
                             </label>
                         </div>
                     </div>
+
+                    {formData.location && (
+                        <div className="bg-navy/5 rounded-lg p-4">
+                            <p className="text-sm text-navy/60 mb-1">Location (Auto-detected)</p>
+                            <p className="text-navy font-medium">{formData.location}</p>
+                        </div>
+                    )}
 
                     <div>
                         <label className="block text-sm font-medium text-navy mb-2">

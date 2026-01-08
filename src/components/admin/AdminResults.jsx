@@ -174,6 +174,7 @@ function ResultForm({ result, onClose, onSuccess }) {
         titans_score: result?.titans_score || 0,
         opponent_score: result?.opponent_score || 0,
         location: result?.location || '',
+        game_type: result?.game_type || 'home',
         leading_scorer: result?.leading_scorer || '',
         leading_scorer_goals: result?.leading_scorer_goals || 0,
         notes: result?.notes || '',
@@ -188,6 +189,47 @@ function ResultForm({ result, onClose, onSuccess }) {
             fetchHomeTeam();
         }
     }, []);
+
+    // Auto-populate location based on game type and teams
+    useEffect(() => {
+        const populateStadium = async () => {
+            try {
+                if (formData.game_type === 'home' && formData.home_team_id) {
+                    // Fetch home team's stadium
+                    const { data, error } = await supabase
+                        .from('teams')
+                        .select('stadium')
+                        .eq('id', formData.home_team_id)
+                        .single();
+
+                    if (error) throw error;
+                    if (data?.stadium) {
+                        setFormData(prev => ({ ...prev, location: data.stadium }));
+                    }
+                } else if (formData.game_type === 'away' && formData.opponent_team_id) {
+                    // Fetch opponent team's stadium
+                    const { data, error } = await supabase
+                        .from('teams')
+                        .select('stadium')
+                        .eq('id', formData.opponent_team_id)
+                        .single();
+
+                    if (error) throw error;
+                    if (data?.stadium) {
+                        setFormData(prev => ({ ...prev, location: data.stadium }));
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching stadium:', error);
+            }
+        };
+
+        // Only auto-populate if we're not editing an existing result
+        // or if the location field is empty
+        if (!result || !formData.location) {
+            populateStadium();
+        }
+    }, [formData.game_type, formData.opponent_team_id, formData.home_team_id]);
 
     const fetchHomeTeam = async () => {
         try {
@@ -329,19 +371,42 @@ function ResultForm({ result, onClose, onSuccess }) {
 
                     <div>
                         <label className="block text-sm font-medium text-navy mb-2">
-                            Location *
+                            Game Type *
                         </label>
-                        <input
-                            type="text"
-                            required
-                            value={formData.location}
-                            onChange={(e) =>
-                                setFormData({ ...formData, location: e.target.value })
-                            }
-                            placeholder="Titans Field"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors"
-                        />
+                        <div className="flex gap-4">
+                            <label className="flex items-center">
+                                <input
+                                    type="radio"
+                                    value="home"
+                                    checked={formData.game_type === 'home'}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, game_type: e.target.value })
+                                    }
+                                    className="mr-2"
+                                />
+                                <span className="text-navy">Home</span>
+                            </label>
+                            <label className="flex items-center">
+                                <input
+                                    type="radio"
+                                    value="away"
+                                    checked={formData.game_type === 'away'}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, game_type: e.target.value })
+                                    }
+                                    className="mr-2"
+                                />
+                                <span className="text-navy">Away</span>
+                            </label>
+                        </div>
                     </div>
+
+                    {formData.location && (
+                        <div className="bg-navy/5 rounded-lg p-4">
+                            <p className="text-sm text-navy/60 mb-1">Location (Auto-detected)</p>
+                            <p className="text-navy font-medium">{formData.location}</p>
+                        </div>
+                    )}
 
                     <div className="grid grid-cols-2 gap-4">
                         <div>
