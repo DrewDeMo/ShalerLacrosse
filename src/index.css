@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply font-outfit bg-navy text-white overflow-x-hidden;
+    }
+}
+
+@layer components {
+    .nav-link {
+        @apply text-white no-underline text-sm font-medium tracking-wide uppercase relative py-2 transition-colors duration-300;
+        @apply after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-red after:transition-all after:duration-300;
+        @apply hover:after:w-full;
+    }
+
+    .btn-primary {
+        @apply inline-flex items-center gap-2 px-8 py-4 text-sm font-semibold tracking-wide uppercase bg-red text-white rounded transition-all duration-300 shadow-lg shadow-red-glow hover:bg-red-600 hover:-translate-y-1 hover:shadow-xl;
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center gap-2 px-8 py-4 text-sm font-semibold tracking-wide uppercase bg-transparent text-white border border-white/30 rounded transition-all duration-300 hover:bg-white/10 hover:border-white/50;
+    }
+
+    .footer-link {
+        @apply text-white/70 text-sm transition-colors duration-300 hover:text-white;
+    }
+
+    .social-link {
+        @apply w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-white transition-all duration-300 hover:bg-red hover:-translate-y-1;
+    }
+
+    .view-all-link {
+        @apply inline-flex items-center gap-2 text-red font-semibold text-sm uppercase tracking-wide transition-all duration-300 hover:gap-3;
+    }
+}
+
+@layer utilities {
+    .text-gradient {
+        @apply bg-gradient-to-r from-red to-red-600 bg-clip-text text-transparent;
+    }
+
+    .animate-fadeSlideUp {
+        animation: fadeSlideUp 1s ease forwards;
+        opacity: 0;
+    }
+
+    .animation-delay-300 {
+        animation-delay: 300ms;
+    }
+
+    .animate-fadeIn {
+        animation: fadeIn 0.8s ease forwards;
+        opacity: 0;
+    }
+
+    .bg-grid-pattern {
+        background-image:
+            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 60px 60px;
+        mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+    }
+
+    .bg-gradient-radial {
+        background-image: radial-gradient(circle, var(--tw-gradient-stops));
+    }
+}
+
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
