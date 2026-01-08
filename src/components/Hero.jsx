@@ -238,7 +238,7 @@ export default function Hero() {
         <section
             ref={heroRef}
             id="home"
-            className="min-h-[calc(100vh-120px)] flex items-center relative overflow-hidden px-6 lg:px-12 pt-24 pb-16"
+            className="min-h-screen lg:min-h-[calc(100vh-120px)] flex items-center relative overflow-hidden px-4 sm:px-6 lg:px-12 pt-20 sm:pt-24 pb-12 sm:pb-16"
         >
             {/* Background */}
             <div className="absolute inset-0 z-0">
@@ -258,16 +258,16 @@ export default function Hero() {
                     }}
                 />
 
-                {/* Interactive red glow - primary (right side) */}
+                {/* Interactive red glow - primary (right side) - smaller on mobile */}
                 <div
                     ref={glowRef}
-                    className="absolute top-1/4 right-[15%] w-[600px] h-[600px] bg-red/20 rounded-full blur-[180px] pointer-events-none"
+                    className="absolute top-1/4 right-0 lg:right-[15%] w-[300px] lg:w-[600px] h-[300px] lg:h-[600px] bg-red/20 rounded-full blur-[100px] lg:blur-[180px] pointer-events-none"
                 />
 
-                {/* Secondary glow - bottom left for variety */}
+                {/* Secondary glow - bottom left for variety - smaller on mobile */}
                 <div
                     ref={glow2Ref}
-                    className="absolute bottom-[20%] left-[10%] w-[400px] h-[400px] bg-red/15 rounded-full blur-[150px] pointer-events-none"
+                    className="absolute bottom-[10%] lg:bottom-[20%] left-0 lg:left-[10%] w-[200px] lg:w-[400px] h-[200px] lg:h-[400px] bg-red/15 rounded-full blur-[80px] lg:blur-[150px] pointer-events-none"
                 />
 
                 {/* Grid overlay */}
@@ -278,21 +278,21 @@ export default function Hero() {
             </div>
 
             {/* Content */}
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 max-w-7xl mx-auto w-full items-center">
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 max-w-7xl mx-auto w-full items-center">
                 {/* Text Content */}
-                <div ref={contentRef}>
+                <div ref={contentRef} className="text-center lg:text-left order-2 lg:order-1">
                     {/* Season Badge */}
-                    <div className="hero-badge inline-flex items-center gap-2 bg-red/10 border border-red/25 px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase mb-6 text-red">
+                    <div className="hero-badge inline-flex items-center gap-2 bg-red/10 border border-red/25 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-semibold tracking-wider uppercase mb-4 sm:mb-6 text-red">
                         <span className="w-1.5 h-1.5 bg-red rounded-full animate-pulse" />
                         2025–26 Season
                     </div>
 
                     {/* Main Headline - Bebas Neue with proper styling */}
-                    <h1 className="font-bebas mb-4" style={{ lineHeight: '0.9' }}>
+                    <h1 className="font-bebas mb-3 sm:mb-4" style={{ lineHeight: '0.9' }}>
                         <span
-                            className="main-title block text-white whitespace-nowrap overflow-visible"
+                            className="main-title block text-white"
                             style={{
-                                fontSize: 'clamp(2.5rem, 8vw, 8rem)',
+                                fontSize: 'clamp(2.75rem, 12vw, 8rem)',
                                 fontWeight: 700,
                                 letterSpacing: '-0.02em'
                             }}
@@ -300,9 +300,9 @@ export default function Hero() {
                             <SplitText>SHALER AREA</SplitText>
                         </span>
                         <span
-                            className="subtitle block text-red mt-1 whitespace-nowrap overflow-visible"
+                            className="subtitle block text-red mt-1"
                             style={{
-                                fontSize: 'clamp(1.25rem, 3.5vw, 3rem)',
+                                fontSize: 'clamp(1.5rem, 5vw, 3rem)',
                                 fontWeight: 700,
                                 letterSpacing: '-0.02em'
                             }}
@@ -312,16 +312,16 @@ export default function Hero() {
                     </h1>
 
                     {/* Tagline */}
-                    <p className="hero-tagline text-base lg:text-lg text-white/60 font-light mb-8 max-w-md leading-relaxed" style={{ fontStyle: 'italic' }}>
+                    <p className="hero-tagline text-sm sm:text-base lg:text-lg text-white/60 font-light mb-6 sm:mb-8 max-w-md mx-auto lg:mx-0 leading-relaxed px-2 sm:px-0" style={{ fontStyle: 'italic' }}>
                         Built on discipline. Played with pride. Representing Shaler Area with honor on every field.
                     </p>
 
                     {/* CTA Buttons */}
-                    <div className="hero-buttons flex gap-4 flex-wrap mb-10">
-                        <a href="#schedule" className="btn-primary group">
+                    <div className="hero-buttons flex gap-3 sm:gap-4 flex-wrap justify-center lg:justify-start mb-8 sm:mb-10">
+                        <a href="#schedule" className="btn-primary group text-xs sm:text-sm px-5 sm:px-7 py-3 sm:py-3.5">
                             View Schedule
                             <svg
-                                className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                                className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                                 fill="none"
                                 stroke="currentColor"
                                 strokeWidth="2"
@@ -332,13 +332,13 @@ export default function Hero() {
                                 <path d="M7 17L17 7M17 7H7M17 7V17" />
                             </svg>
                         </a>
-                        <a href="#contact" className="btn-secondary-compact">
+                        <a href="#contact" className="btn-secondary-compact text-xs sm:text-sm px-4 sm:px-6 py-3 sm:py-3.5">
                             Contact Us
                         </a>
                     </div>
 
                     {/* Quick Stats */}
-                    <div className="hero-stats flex gap-8 lg:gap-10">
+                    <div className="hero-stats flex gap-6 sm:gap-8 lg:gap-10 justify-center lg:justify-start">
                         <StatCounter value="15" label="Years" suffix="+" delay={0} />
                         <StatCounter value="200" label="Athletes" suffix="+" delay={0.15} />
                         <StatCounter value="50" label="Wins" suffix="+" delay={0.3} />
@@ -346,9 +346,9 @@ export default function Hero() {
                 </div>
 
                 {/* Hero Image / Visual */}
-                <div ref={imageRef} className="relative group">
+                <div ref={imageRef} className="relative group order-1 lg:order-2 mx-auto lg:mx-0 w-full max-w-sm sm:max-w-md lg:max-w-none">
                     {/* Main image container */}
-                    <div className="aspect-[4/5] rounded-2xl overflow-hidden relative border border-white/[0.08]">
+                    <div className="aspect-[4/5] lg:aspect-[4/5] rounded-xl sm:rounded-2xl overflow-hidden relative border border-white/[0.08]">
                         {/* Responsive Hero Images */}
                         <picture>
                             <source media="(min-width: 1024px)" srcSet="/hero_desktop.webp" />
@@ -366,16 +366,16 @@ export default function Hero() {
                         <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-transparent to-transparent pointer-events-none" />
                     </div>
 
-                    {/* Animated border frame */}
-                    <div className="hero-image-border absolute -inset-3 lg:-inset-4 border border-red/30 rounded-3xl pointer-events-none" />
+                    {/* Animated border frame - smaller offset on mobile */}
+                    <div className="hero-image-border absolute -inset-2 sm:-inset-3 lg:-inset-4 border border-red/30 rounded-2xl sm:rounded-3xl pointer-events-none" />
 
-                    {/* Subtle glow behind */}
-                    <div className="absolute -bottom-6 -right-6 w-40 h-40 bg-red rounded-full blur-[60px] opacity-30 pointer-events-none" />
+                    {/* Subtle glow behind - smaller on mobile */}
+                    <div className="absolute -bottom-4 sm:-bottom-6 -right-4 sm:-right-6 w-24 sm:w-32 lg:w-40 h-24 sm:h-32 lg:h-40 bg-red rounded-full blur-[40px] sm:blur-[50px] lg:blur-[60px] opacity-30 pointer-events-none" />
                 </div>
             </div>
 
-            {/* Scroll indicator */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+            {/* Scroll indicator - hidden on mobile */}
+            <div className="hidden sm:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 opacity-40">
                 <span className="text-[10px] uppercase tracking-[0.2em] text-white/50">Scroll</span>
                 <div className="w-px h-8 bg-gradient-to-b from-white/50 to-transparent" />
             </div>

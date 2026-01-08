@@ -169,3 +169,85 @@ select option {
 .sponsors-swiper .swiper-wrapper {
     transition-timing-function: linear !important;
 }
+
+/* Mobile Navigation Styles */
+.mobile-nav-link {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-link::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%) scaleX(0);
+    width: 12px;
+    height: 3px;
+    background: #c8102e;
+    border-radius: 2px;
+    transition: transform 0.3s ease;
+    transform-origin: left center;
+}
+
+.mobile-nav-link:hover::before {
+    transform: translateY(-50%) scaleX(1);
+}
+
+/* Mobile-specific responsive adjustments */
+@media (max-width: 640px) {
+
+    /* Hero section mobile tweaks */
+    .hero-grid-pattern {
+        background-size: 30px 30px;
+    }
+
+    /* Stat counters on mobile */
+    .stat-item .font-bebas {
+        font-size: 1.5rem !important;
+    }
+
+    /* Button refinements for mobile */
+    .btn-primary,
+    .btn-secondary-compact {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.75rem;
+    }
+
+    /* Mobile navigation active state styling */
+    .mobile-nav-link {
+        font-size: 2.75rem;
+    }
+}
+
+/* Touch-friendly tap targets */
+@media (hover: none) and (pointer: coarse) {
+
+    .nav-link,
+    .btn-primary,
+    .btn-secondary-compact,
+    .mobile-nav-link {
+        min-height: 44px;
+    }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+
+    .split-text .char,
+    .hero-badge,
+    .hero-tagline,
+    .hero-buttons a,
+    .hero-stats,
+    .mobile-nav-link {
+        animation: none !important;
+        transition: opacity 0.3s ease !important;
+    }
+}
+
+/* Safe area padding for notched devices */
+@supports (padding: max(0px)) {
+    .fixed.top-0 {
+        padding-top: max(1rem, env(safe-area-inset-top));
+    }
+}
