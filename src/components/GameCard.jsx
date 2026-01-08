@@ -2,14 +2,13 @@ import { format, parseISO } from 'date-fns';
 import TeamLogo from './common/TeamLogo';
 
 /**
- * GameCard Component - Modern Sports Matchup Display
- * Titans always displayed on left, opponent on right
- * Features: Team logos, color theming, home/away badges, glassmorphism design
+ * GameCard Component - Clean Athletic Schedule Row
+ * Horizontal layout: Date | Opponent Logo & Info | Home/Away Badge | Time
  */
 export default function GameCard({ game }) {
     const gameDate = parseISO(game.date);
-    const month = format(gameDate, 'MMM');
-    const day = format(gameDate, 'd');
+    const month = format(gameDate, 'MMM').toUpperCase();
+    const day = format(gameDate, 'd').padStart(2, '0');
     const weekday = format(gameDate, 'EEEE');
 
     // Format time from database (e.g., "13:00:00" to "1:00 PM")
@@ -27,135 +26,108 @@ export default function GameCard({ game }) {
         }
     }
 
-    // Determine teams - Titans always on left
-    const titansTeam = game.home || {
-        name: 'Shaler Area Titans',
-        logo_url: null,
-        primary_color: '#C8102E',
-        secondary_color: '#003B5C'
-    };
-
+    // Get opponent info
     const opponentTeam = game.opponent || {
-        name: game.opponent || 'TBD',
+        name: 'TBD',
         logo_url: null,
-        primary_color: '#666666',
-        secondary_color: '#999999'
+        primary_color: '#666666'
     };
 
-    // Get team colors for styling
-    const titansColor = titansTeam.primary_color || '#C8102E';
+    const opponentName = opponentTeam.short_name || opponentTeam.name || 'TBD';
     const opponentColor = opponentTeam.primary_color || '#666666';
+    const opponentLogo = opponentTeam.logo_url;
 
     const isHome = game.game_type === 'home';
+    const displayName = isHome ? `vs. ${opponentName}` : `@ ${opponentName}`;
+
+    // Location - use stadium_name from the game or fallback to location field
+    const locationText = game.stadium_name || game.location || (isHome ? 'Shaler Stadium' : 'Away');
 
     return (
         <div
-            className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 relative overflow-hidden group"
-            style={{
-                background: `linear-gradient(135deg, ${titansColor}03, ${opponentColor}03)`,
-                borderTop: `3px solid transparent`,
-                borderImage: `linear-gradient(90deg, ${titansColor}40, ${opponentColor}40) 1`,
-                borderImageSlice: 1
-            }}
+            className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 group relative overflow-hidden"
         >
-            {/* Subtle gradient overlay on hover */}
+            {/* Subtle left accent using opponent's team color */}
             <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                style={{
-                    background: `radial-gradient(circle at center, ${isHome ? titansColor : opponentColor}05, transparent)`
-                }}
+                className="absolute left-0 top-0 bottom-0 w-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{ backgroundColor: opponentColor }}
             />
 
-            {/* Content */}
-            <div className="relative z-10">
-                {/* Date Header */}
-                <div className="text-center mb-6">
-                    <div className="inline-flex items-center gap-2 px-4 py-1 bg-navy/5 rounded-full">
-                        <span className="text-xs font-semibold text-red uppercase tracking-widest">
-                            {month}
-                        </span>
-                        <span className="font-bebas text-3xl text-navy leading-none">
-                            {day}
-                        </span>
-                        <span className="text-xs text-gray-600">
-                            {weekday}
-                        </span>
-                    </div>
-                </div>
-
-                {/* Team Matchup */}
-                <div className="flex items-center justify-between gap-4 mb-6">
-                    {/* Shaler Titans (Left) */}
-                    <div className="flex-1 text-center">
-                        <TeamLogo
-                            logoUrl={titansTeam.logo_url}
-                            teamName={titansTeam.name}
-                            primaryColor={titansColor}
-                            size="large"
-                            className="mx-auto mb-3"
-                        />
-                        <p className="font-semibold text-navy text-sm md:text-base">
-                            {titansTeam.short_name || titansTeam.name || 'Shaler Titans'}
-                        </p>
-                    </div>
-
-                    {/* VS Indicator */}
-                    <div className="flex flex-col items-center px-4">
-                        <span className="font-bebas text-4xl text-navy/40 leading-none">
-                            VS
-                        </span>
-                    </div>
-
-                    {/* Opponent (Right) */}
-                    <div className="flex-1 text-center">
-                        <TeamLogo
-                            logoUrl={opponentTeam.logo_url}
-                            teamName={opponentTeam.name}
-                            primaryColor={opponentColor}
-                            size="large"
-                            className="mx-auto mb-3"
-                        />
-                        <p className="font-semibold text-navy text-sm md:text-base">
-                            {opponentTeam.short_name || opponentTeam.name}
-                        </p>
-                    </div>
-                </div>
-
-                {/* Game Details */}
-                <div className="space-y-2 mb-4 text-center">
-                    <p className="font-bebas text-2xl text-navy">
-                        {timeFormatted}
-                    </p>
-                    <p className="text-sm text-gray-600">
-                        {game.location}
-                    </p>
-                </div>
-
-                {/* Home/Away Badge */}
-                <div className="flex justify-center">
-                    <span
-                        className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${isHome
-                                ? 'bg-navy/10 text-navy'
-                                : 'bg-red/10 text-red'
-                            }`}
-                        style={{
-                            boxShadow: isHome
-                                ? `0 0 20px ${titansColor}15`
-                                : `0 0 20px ${opponentColor}15`
-                        }}
-                    >
-                        {isHome ? '🏠 HOME' : '✈️ AWAY'}
+            <div className="flex items-center px-6 py-5 md:px-8 md:py-6">
+                {/* Date Section */}
+                <div className="flex-shrink-0 text-center w-16 md:w-20">
+                    <span className="block text-xs font-semibold text-red tracking-widest uppercase">
+                        {month}
+                    </span>
+                    <span className="block font-bebas text-4xl md:text-5xl text-navy leading-none">
+                        {day}
+                    </span>
+                    <span className="block text-xs text-gray-500 capitalize">
+                        {weekday}
                     </span>
                 </div>
 
-                {/* Notes if any */}
-                {game.notes && (
-                    <div className="mt-4 pt-4 border-t border-gray-100">
-                        <p className="text-xs text-gray-500 text-center italic">
-                            {game.notes}
-                        </p>
+                {/* Vertical Divider */}
+                <div className="hidden md:block w-px h-16 bg-gray-200 mx-6 flex-shrink-0" />
+                <div className="md:hidden w-px h-12 bg-gray-200 mx-4 flex-shrink-0" />
+
+                {/* Opponent Logo & Info */}
+                <div className="flex items-center gap-4 flex-1 min-w-0">
+                    {/* Opponent Logo */}
+                    <div className="flex-shrink-0 hidden sm:block">
+                        <TeamLogo
+                            logoUrl={opponentLogo}
+                            teamName={opponentTeam.name}
+                            primaryColor={opponentColor}
+                            size="small"
+                        />
                     </div>
-                )}
+
+                    {/* Opponent Name & Location */}
+                    <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-navy text-base md:text-lg truncate group-hover:text-red transition-colors duration-200">
+                            {displayName}
+                        </h3>
+                        <div className="flex items-center gap-2 mt-1">
+                            {/* Location Icon (SVG) */}
+                            <svg
+                                className="w-3.5 h-3.5 text-gray-400 flex-shrink-0"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth={2}
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span className="text-sm text-gray-500 truncate">
+                                {locationText}
+                                {game.notes && (
+                                    <span className="text-red"> • {game.notes}</span>
+                                )}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Home/Away Badge */}
+                <div className="flex-shrink-0 mx-4 md:mx-6">
+                    <span
+                        className={`inline-flex items-center justify-center px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${isHome
+                                ? 'bg-navy text-white'
+                                : 'bg-transparent border-2 border-red/30 text-red'
+                            }`}
+                    >
+                        {isHome ? 'HOME' : 'AWAY'}
+                    </span>
+                </div>
+
+                {/* Time */}
+                <div className="flex-shrink-0 text-right">
+                    <span className="font-bebas text-xl md:text-2xl text-navy tracking-wide">
+                        {timeFormatted}
+                    </span>
+                </div>
             </div>
         </div>
     );
