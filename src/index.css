@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -22,11 +22,15 @@
     }
 
     .btn-primary {
-        @apply inline-flex items-center gap-2 px-8 py-4 text-sm font-semibold tracking-wide uppercase bg-red text-white rounded transition-all duration-300 shadow-lg shadow-red-glow hover:bg-red-600 hover:-translate-y-1 hover:shadow-xl;
+        @apply inline-flex items-center gap-2 px-7 py-3.5 text-sm font-semibold tracking-wide uppercase bg-red text-white rounded transition-all duration-300 shadow-lg shadow-red-glow hover:bg-red-600 hover:-translate-y-0.5 hover:shadow-xl;
     }
 
     .btn-secondary {
         @apply inline-flex items-center gap-2 px-8 py-4 text-sm font-semibold tracking-wide uppercase bg-transparent text-white border border-white/30 rounded transition-all duration-300 hover:bg-white/10 hover:border-white/50;
+    }
+
+    .btn-secondary-compact {
+        @apply inline-flex items-center justify-center px-6 py-3.5 text-sm font-semibold tracking-wide uppercase bg-transparent text-white border border-white/20 rounded transition-all duration-300 hover:bg-white/5 hover:border-white/40;
     }
 
     .footer-link {
@@ -69,8 +73,41 @@
         mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
     }
 
+    /* Hero grid pattern - subtle, smaller grid like professional sports sites */
+    .hero-grid-pattern {
+        background-image:
+            linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+        background-size: 50px 50px;
+        mask-image: linear-gradient(to bottom, black 0%, black 50%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 0%, black 50%, transparent 100%);
+    }
+
     .bg-gradient-radial {
         background-image: radial-gradient(circle, var(--tw-gradient-stops));
+    }
+
+    /* 3D perspective for split text animations */
+    .perspective-1000 {
+        perspective: 1000px;
+    }
+
+    /* Split text character styling */
+    .split-text .char {
+        display: inline-block;
+        will-change: transform, opacity;
+        backface-visibility: hidden;
+    }
+
+    /* Smooth will-change for animated elements */
+    .will-change-transform {
+        will-change: transform;
+    }
+
+    /* GPU acceleration helper */
+    .gpu-accelerated {
+        transform: translateZ(0);
+        backface-visibility: hidden;
     }
 }
 
