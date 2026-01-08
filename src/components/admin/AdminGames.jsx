@@ -122,8 +122,8 @@ export default function AdminGames() {
                                     <td className="px-6 py-4">
                                         <span
                                             className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold ${game.game_type === 'home'
-                                                    ? 'bg-navy/10 text-navy'
-                                                    : 'bg-red/10 text-red'
+                                                ? 'bg-navy/10 text-navy'
+                                                : 'bg-red/10 text-red'
                                                 }`}
                                         >
                                             {game.game_type}
@@ -223,7 +223,7 @@ function GameForm({ game, onClose, onSuccess }) {
                                 onChange={(e) =>
                                     setFormData({ ...formData, date: e.target.value })
                                 }
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors text-navy"
                             />
                         </div>
 
@@ -238,7 +238,7 @@ function GameForm({ game, onClose, onSuccess }) {
                                 onChange={(e) =>
                                     setFormData({ ...formData, time: e.target.value })
                                 }
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors text-navy"
                             />
                         </div>
                     </div>
@@ -255,7 +255,7 @@ function GameForm({ game, onClose, onSuccess }) {
                                 setFormData({ ...formData, opponent: e.target.value })
                             }
                             placeholder="North Allegheny Tigers"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors text-navy"
                         />
                     </div>
 

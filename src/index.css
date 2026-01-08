@@ -95,3 +95,9 @@
         opacity: 1;
     }
 }
+
+/* Fix for select dropdown option colors */
+select option {
+    background-color: white !important;
+    color: #1e3a5f !important;
+}

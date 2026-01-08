@@ -124,8 +124,8 @@ export default function AdminResults() {
                                         <td className="px-6 py-4">
                                             <span
                                                 className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold ${isWin
-                                                        ? 'bg-green-100 text-green-800'
-                                                        : 'bg-red/10 text-red'
+                                                    ? 'bg-green-100 text-green-800'
+                                                    : 'bg-red/10 text-red'
                                                     }`}
                                             >
                                                 {isWin ? 'Win' : 'Loss'}
@@ -239,7 +239,7 @@ function ResultForm({ result, onClose, onSuccess }) {
                             onChange={(e) =>
                                 setFormData({ ...formData, game_date: e.target.value })
                             }
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors text-navy"
                         />
                     </div>
 
@@ -255,7 +255,7 @@ function ResultForm({ result, onClose, onSuccess }) {
                                 setFormData({ ...formData, opponent: e.target.value })
                             }
                             placeholder="North Allegheny Tigers"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors text-navy"
                         />
                     </div>
 
@@ -272,7 +272,7 @@ function ResultForm({ result, onClose, onSuccess }) {
                                 onChange={(e) =>
                                     setFormData({ ...formData, titans_score: e.target.value })
                                 }
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors text-navy"
                             />
                         </div>
 

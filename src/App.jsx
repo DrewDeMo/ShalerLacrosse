@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import Stats from './components/Stats';
 import Schedule from './components/Schedule';
 import Results from './components/Results';
+import Roster from './components/Roster';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
 import AdminLayout from './components/admin/AdminLayout';
@@ -21,6 +22,7 @@ function HomePage() {
             <Stats />
             <Schedule />
             <Results />
+            <Roster />
             <CTA />
             <Footer />
         </>

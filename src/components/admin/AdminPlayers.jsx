@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Plus, Edit2, Trash2 } from 'lucide-react';
+import ImageUpload from './ImageUpload';
 
 export default function AdminPlayers() {
     const [players, setPlayers] = useState([]);
@@ -124,8 +125,8 @@ export default function AdminPlayers() {
                                     <td className="px-6 py-4">
                                         <span
                                             className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold ${player.is_active
-                                                    ? 'bg-green-100 text-green-800'
-                                                    : 'bg-gray-100 text-gray-800'
+                                                ? 'bg-green-100 text-green-800'
+                                                : 'bg-gray-100 text-gray-800'
                                                 }`}
                                         >
                                             {player.is_active ? 'Active' : 'Inactive'}
@@ -234,7 +235,7 @@ function PlayerForm({ player, onClose, onSuccess }) {
                                     setFormData({ ...formData, first_name: e.target.value })
                                 }
                                 placeholder="John"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors text-navy"
                             />
                         </div>
 
@@ -250,7 +251,7 @@ function PlayerForm({ player, onClose, onSuccess }) {
                                     setFormData({ ...formData, last_name: e.target.value })
                                 }
                                 placeholder="Smith"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors text-navy"
                             />
                         </div>
                     </div>
@@ -269,7 +270,7 @@ function PlayerForm({ player, onClose, onSuccess }) {
                                     setFormData({ ...formData, jersey_number: e.target.value })
                                 }
                                 placeholder="10"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors text-navy"
                             />
                         </div>
 
@@ -308,20 +309,12 @@ function PlayerForm({ player, onClose, onSuccess }) {
                         />
                     </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-navy mb-2">
-                            Photo URL (optional)
-                        </label>
-                        <input
-                            type="url"
-                            value={formData.photo_url}
-                            onChange={(e) =>
-                                setFormData({ ...formData, photo_url: e.target.value })
-                            }
-                            placeholder="https://example.com/photo.jpg"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors"
-                        />
-                    </div>
+                    <ImageUpload
+                        currentImage={formData.photo_url}
+                        onImageUploaded={(url) =>
+                            setFormData({ ...formData, photo_url: url || '' })
+                        }
+                    />
 
                     <div>
                         <label className="block text-sm font-medium text-navy mb-2">
