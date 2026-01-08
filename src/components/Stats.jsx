@@ -200,6 +200,34 @@ export default function Stats() {
             {/* Dynamic gradient background */}
             <div className="absolute inset-0 bg-gradient-to-b from-navy via-[#0a1d4a] to-navy" />
 
+            {/* Net texture background with duotone effect */}
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    backgroundImage: 'url(/net_closeup.webp)',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    filter: 'grayscale(100%) contrast(1.4) brightness(0.9)',
+                    opacity: 0.06,
+                    mixBlendMode: 'screen'
+                }}
+            />
+            {/* Navy/Red duotone color overlay for net */}
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background: 'linear-gradient(180deg, rgba(0, 59, 92, 0.85) 0%, rgba(200, 16, 46, 0.12) 40%, rgba(10, 29, 74, 0.9) 100%)',
+                    mixBlendMode: 'multiply'
+                }}
+            />
+            {/* Radial vignette to fade edges and focus center */}
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0, 36, 54, 0.7) 65%, rgba(0, 36, 54, 0.98) 100%)'
+                }}
+            />
+
             {/* Animated gradient orbs */}
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-red/10 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '4s' }} />
             <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-red/5 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '6s', animationDelay: '2s' }} />

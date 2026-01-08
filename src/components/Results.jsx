@@ -40,6 +40,34 @@ export default function Results() {
 
     return (
         <section id="results" className="py-24 px-6 md:px-12 bg-navy relative overflow-hidden">
+            {/* Grass texture background with duotone effect */}
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    backgroundImage: 'url(/field_grass_closeup.webp)',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    filter: 'grayscale(100%) contrast(1.2)',
+                    opacity: 0.08,
+                    mixBlendMode: 'overlay'
+                }}
+            />
+            {/* Navy/Red duotone color overlay for grass */}
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background: 'linear-gradient(135deg, rgba(0, 59, 92, 0.95) 0%, rgba(200, 16, 46, 0.15) 50%, rgba(0, 59, 92, 0.9) 100%)',
+                    mixBlendMode: 'color'
+                }}
+            />
+            {/* Radial vignette to fade edges and focus center */}
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background: 'radial-gradient(ellipse at center, transparent 20%, rgba(0, 36, 54, 0.6) 70%, rgba(0, 36, 54, 0.95) 100%)'
+                }}
+            />
+
             {/* Background text effect */}
             <div className="absolute inset-0 flex items-center justify-center font-bebas text-[25vw] text-white/5 select-none pointer-events-none">
                 TITANS
