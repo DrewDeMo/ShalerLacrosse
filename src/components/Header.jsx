@@ -20,8 +20,8 @@ export default function Header() {
 
     return (
         <nav className={`fixed top-0 left-0 right-0 z-50 px-12 py-5 flex justify-between items-center transition-all duration-500 ease-in-out ${scrolled
-                ? 'bg-navy/95 backdrop-blur-md shadow-lg border-b border-white/5'
-                : 'bg-transparent'
+            ? 'bg-navy/95 backdrop-blur-md shadow-lg'
+            : 'bg-transparent'
             }`}>
             <a href="#" className="flex items-center gap-3 font-bebas text-2xl tracking-wider text-white no-underline">
                 <div className="w-10 h-10 bg-red rounded-lg flex items-center justify-center text-xl">

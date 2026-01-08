@@ -10,8 +10,11 @@ const SplitText = ({ children, className = '', as: Tag = 'span' }) => {
             {text.split('').map((char, i) => (
                 <span
                     key={i}
-                    className="char inline-block"
-                    style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
+                    className="char inline-block align-baseline"
+                    style={{
+                        display: char === ' ' ? 'inline' : 'inline-block',
+                        verticalAlign: 'baseline'
+                    }}
                 >
                     {char === ' ' ? '\u00A0' : char}
                 </span>
@@ -343,7 +346,7 @@ export default function Hero() {
                 </div>
 
                 {/* Hero Image / Visual */}
-                <div ref={imageRef} className="relative">
+                <div ref={imageRef} className="relative group">
                     {/* Main image container */}
                     <div className="aspect-[4/5] rounded-2xl overflow-hidden relative border border-white/[0.08]">
                         {/* Responsive Hero Images */}
@@ -352,11 +355,14 @@ export default function Hero() {
                             <img
                                 src="/hero_mobile.webp"
                                 alt="Shaler Area Titans Lacrosse Action"
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                             />
                         </picture>
 
-                        {/* Gradient overlay */}
+                        {/* Blue-red color overlay that fades on hover */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-purple-900/30 to-red-900/40 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-20 pointer-events-none" />
+
+                        {/* Gradient overlay for depth */}
                         <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-transparent to-transparent pointer-events-none" />
                     </div>
 
