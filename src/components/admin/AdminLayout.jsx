@@ -18,7 +18,7 @@ export default function AdminLayout() {
     ];
 
     return (
-        <div className="min-h-screen bg-off-white">
+        <div className="min-h-screen bg-off-white flex flex-col">
             {/* Header */}
             <header className="bg-navy border-b border-white/10">
                 <div className="max-w-7xl mx-auto px-6 py-4">
@@ -80,9 +80,26 @@ export default function AdminLayout() {
             </nav>
 
             {/* Content */}
-            <main className="max-w-7xl mx-auto px-6 py-8">
+            <main className="flex-1 max-w-7xl w-full mx-auto px-6 py-8">
                 <Outlet />
             </main>
+
+            {/* Footer */}
+            <footer className="bg-white border-t border-gray-200 py-4">
+                <div className="max-w-7xl mx-auto px-6">
+                    <p className="text-center text-sm text-navy/60">
+                        Backend system designed & maintained by{' '}
+                        <a
+                            href="https://github.com/DrewDeMo"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-red hover:text-red/80 font-medium transition-colors"
+                        >
+                            Drew DeMaiolo
+                        </a>
+                    </p>
+                </div>
+            </footer>
         </div>
     );
 }
