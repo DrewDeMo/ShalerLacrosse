@@ -50,10 +50,12 @@ export default function Header() {
                 }`}>
                 {/* Logo */}
                 <a href="#" className="flex items-center gap-3 font-bebas text-xl lg:text-2xl tracking-wider text-white no-underline z-50">
-                    <div className="w-9 h-9 lg:w-10 lg:h-10 bg-red rounded-lg flex items-center justify-center text-lg lg:text-xl">
-                        T
-                    </div>
-                    TITANS LAX
+                    <img
+                        src="/slax_logo.webp"
+                        alt="Shaler Area Lacrosse Logo"
+                        className="w-10 h-10 lg:w-12 lg:h-12 object-contain"
+                    />
+                    SHALER LAX
                 </a>
 
                 {/* Desktop Navigation */}
@@ -108,6 +110,16 @@ export default function Header() {
 
                 {/* Menu Content */}
                 <div className="relative h-full flex flex-col justify-center items-center px-8">
+                    {/* Logo in mobile menu */}
+                    <div className={`mb-8 transition-all duration-500 ${mobileMenuOpen ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-8 opacity-0 scale-90'
+                        }`}>
+                        <img
+                            src="/slax_logo.webp"
+                            alt="Shaler Area Lacrosse Logo"
+                            className="w-24 h-24 object-contain"
+                        />
+                    </div>
+
                     {/* Navigation Links */}
                     <ul className="flex flex-col items-center gap-2">
                         {navLinks.map((link, index) => (

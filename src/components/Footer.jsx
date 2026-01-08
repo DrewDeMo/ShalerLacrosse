@@ -97,8 +97,12 @@ export default function Footer() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-12">
                         {/* Brand Section */}
                         <div className="lg:col-span-2 footer-animate">
-                            <div className="flex items-center gap-3 mb-5">
-                                <div className="w-1 h-10 bg-gradient-to-b from-red to-red/30 rounded-full" />
+                            <div className="flex items-center gap-4 mb-5">
+                                <img
+                                    src="/slax_logo.webp"
+                                    alt="Shaler Area Lacrosse Logo"
+                                    className="w-16 h-16 lg:w-20 lg:h-20 object-contain"
+                                />
                                 <h3 className="font-bebas text-3xl lg:text-4xl tracking-wide text-white">
                                     SHALER AREA <span className="text-red">TITANS</span> LACROSSE
                                 </h3>
