@@ -1,54 +1,41 @@
+import { useGames } from '../hooks/useGames';
 import GameCard from './GameCard';
 
-const games = [
-    {
-        month: 'Mar',
-        day: '15',
-        weekday: 'Saturday',
-        opponent: 'North Allegheny Tigers',
-        location: 'Titans Field • Season Opener',
-        type: 'home',
-        time: '1:00 PM'
-    },
-    {
-        month: 'Mar',
-        day: '22',
-        weekday: 'Saturday',
-        opponent: 'Pine-Richland Rams',
-        location: 'Pine-Richland Stadium',
-        type: 'away',
-        time: '2:00 PM'
-    },
-    {
-        month: 'Mar',
-        day: '29',
-        weekday: 'Saturday',
-        opponent: 'Fox Chapel Foxes',
-        location: 'Titans Field',
-        type: 'home',
-        time: '1:00 PM'
-    },
-    {
-        month: 'Apr',
-        day: '05',
-        weekday: 'Saturday',
-        opponent: 'Seneca Valley Raiders',
-        location: 'NexTier Stadium',
-        type: 'away',
-        time: '12:00 PM'
-    },
-    {
-        month: 'Apr',
-        day: '12',
-        weekday: 'Saturday',
-        opponent: 'Hampton Talbots',
-        location: 'Titans Field • Youth Day',
-        type: 'home',
-        time: '1:00 PM'
-    },
-];
-
 export default function Schedule() {
+    const { games, loading, error } = useGames(5);
+
+    if (loading) {
+        return (
+            <section id="schedule" className="py-24 px-12 bg-off-white text-navy relative">
+                <div className="absolute top-0 left-0 right-0 h-52 bg-gradient-to-b from-navy/5 to-transparent" />
+
+                <div className="max-w-7xl mx-auto relative text-center">
+                    <h2 className="font-bebas text-6xl tracking-wide leading-none mb-8">
+                        <span className="block text-sm text-red tracking-widest mb-2">Upcoming Games</span>
+                        SCHEDULE
+                    </h2>
+                    <p className="text-navy/60">Loading schedule...</p>
+                </div>
+            </section>
+        );
+    }
+
+    if (error) {
+        return (
+            <section id="schedule" className="py-24 px-12 bg-off-white text-navy relative">
+                <div className="absolute top-0 left-0 right-0 h-52 bg-gradient-to-b from-navy/5 to-transparent" />
+
+                <div className="max-w-7xl mx-auto relative text-center">
+                    <h2 className="font-bebas text-6xl tracking-wide leading-none mb-8">
+                        <span className="block text-sm text-red tracking-widest mb-2">Upcoming Games</span>
+                        SCHEDULE
+                    </h2>
+                    <p className="text-red">Error loading schedule: {error}</p>
+                </div>
+            </section>
+        );
+    }
+
     return (
         <section id="schedule" className="py-24 px-12 bg-off-white text-navy relative">
             <div className="absolute top-0 left-0 right-0 h-52 bg-gradient-to-b from-navy/5 to-transparent" />
@@ -67,11 +54,15 @@ export default function Schedule() {
                     </a>
                 </div>
 
-                <div className="grid gap-4">
-                    {games.map((game, index) => (
-                        <GameCard key={index} game={game} />
-                    ))}
-                </div>
+                {games.length === 0 ? (
+                    <p className="text-center py-12 text-navy/60">No upcoming games scheduled.</p>
+                ) : (
+                    <div className="grid gap-4">
+                        {games.map((game) => (
+                            <GameCard key={game.id} game={game} />
+                        ))}
+                    </div>
+                )}
             </div>
         </section>
     );

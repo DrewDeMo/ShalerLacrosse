@@ -1,4 +1,23 @@
+import { useResults } from '../hooks/useResults';
+import { format, parseISO } from 'date-fns';
+
 export default function Results() {
+    const { results, loading, error } = useResults(1);
+
+    // Don't render section if loading or no results
+    if (loading || !results.length) {
+        return null;
+    }
+
+    const latestResult = results[0];
+    const isWin = latestResult.titans_score > latestResult.opponent_score;
+    const opponentInitials = latestResult.opponent
+        .split(' ')
+        .map(word => word[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2);
+
     return (
         <section id="results" className="py-24 px-12 bg-navy relative overflow-hidden">
             <div className="absolute inset-0 flex items-center justify-center font-bebas text-[25vw] text-white/5 select-none pointer-events-none">
@@ -17,7 +36,7 @@ export default function Results() {
                     <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red to-transparent" />
 
                     <div className="inline-block bg-red text-white px-4 py-2 rounded text-xs font-semibold uppercase tracking-wide mb-6">
-                        Season Opener
+                        {isWin ? 'Victory' : 'Final Score'}
                     </div>
 
                     <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-8 mb-8">
@@ -26,37 +45,45 @@ export default function Results() {
                                 T
                             </div>
                             <div className="font-medium mb-1">Shaler Area Titans</div>
-                            <div className="text-sm text-white/50">(1-0)</div>
                         </div>
 
                         <div className="flex items-center gap-4">
-                            <span className="font-bebas text-6xl leading-none text-red">12</span>
+                            <span className={`font-bebas text-6xl leading-none ${isWin ? 'text-red' : ''}`}>
+                                {latestResult.titans_score}
+                            </span>
                             <span className="w-5 h-0.5 bg-white/30" />
-                            <span className="font-bebas text-6xl leading-none">8</span>
+                            <span className={`font-bebas text-6xl leading-none ${!isWin ? 'text-red' : ''}`}>
+                                {latestResult.opponent_score}
+                            </span>
                         </div>
 
                         <div className="text-center">
                             <div className="w-20 h-20 bg-white/10 rounded-xl flex items-center justify-center font-bebas text-3xl mx-auto mb-4">
-                                NA
+                                {opponentInitials}
                             </div>
-                            <div className="font-medium mb-1">North Allegheny</div>
-                            <div className="text-sm text-white/50">(0-1)</div>
+                            <div className="font-medium mb-1">{latestResult.opponent}</div>
                         </div>
                     </div>
 
-                    <div className="flex justify-center gap-12 pt-8 border-t border-white/10">
+                    <div className="flex justify-center gap-12 pt-8 border-t border-white/10 flex-wrap">
                         <div className="text-center">
                             <div className="text-xs uppercase tracking-widest text-white/50 mb-1">Date</div>
-                            <div className="font-semibold">March 15, 2025</div>
+                            <div className="font-semibold">
+                                {format(parseISO(latestResult.game_date), 'MMMM d, yyyy')}
+                            </div>
                         </div>
                         <div className="text-center">
                             <div className="text-xs uppercase tracking-widest text-white/50 mb-1">Location</div>
-                            <div className="font-semibold">Titans Field</div>
+                            <div className="font-semibold">{latestResult.location}</div>
                         </div>
-                        <div className="text-center">
-                            <div className="text-xs uppercase tracking-widest text-white/50 mb-1">Leading Scorer</div>
-                            <div className="font-semibold">Player Name – 4 Goals</div>
-                        </div>
+                        {latestResult.leading_scorer && (
+                            <div className="text-center">
+                                <div className="text-xs uppercase tracking-widest text-white/50 mb-1">Leading Scorer</div>
+                                <div className="font-semibold">
+                                    {latestResult.leading_scorer} – {latestResult.leading_scorer_goals} Goals
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
