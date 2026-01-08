@@ -205,16 +205,34 @@ function GameForm({ game, onClose, onSuccess }) {
         setError('');
 
         try {
+            // Fetch the opponent team name for the opponent field (for backward compatibility)
+            let opponentName = '';
+            if (formData.opponent_team_id) {
+                const { data: teamData, error: teamError } = await supabase
+                    .from('teams')
+                    .select('name')
+                    .eq('id', formData.opponent_team_id)
+                    .single();
+
+                if (teamError) throw teamError;
+                opponentName = teamData.name;
+            }
+
+            const dataToSubmit = {
+                ...formData,
+                opponent: opponentName, // Set opponent name for backward compatibility
+            };
+
             if (game) {
                 // Update existing game
                 const { error } = await supabase
                     .from('games')
-                    .update(formData)
+                    .update(dataToSubmit)
                     .eq('id', game.id);
                 if (error) throw error;
             } else {
                 // Create new game
-                const { error } = await supabase.from('games').insert([formData]);
+                const { error } = await supabase.from('games').insert([dataToSubmit]);
                 if (error) throw error;
             }
             onSuccess();

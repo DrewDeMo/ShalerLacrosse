@@ -101,3 +101,24 @@ select option {
     background-color: white !important;
     color: #1e3a5f !important;
 }
+
+/* Swiper Custom Styles */
+.swiper-pagination-bullet {
+    background: #1e3a5f;
+    opacity: 0.3;
+    width: 12px;
+    height: 12px;
+    transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+    background: #c8102e;
+    opacity: 1;
+    width: 32px;
+    border-radius: 6px;
+}
+
+.swiper-button-disabled {
+    opacity: 0.3 !important;
+    cursor: not-allowed !important;
+}

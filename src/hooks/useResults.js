@@ -17,7 +17,11 @@ export function useResults(limit = 1) {
 
             const { data, error } = await supabase
                 .from('results')
-                .select('*')
+                .select(`
+                    *,
+                    home:home_team_id(id, name, short_name, logo_url, primary_color, secondary_color),
+                    opponent:opponent_team_id(id, name, short_name, logo_url, primary_color, secondary_color)
+                `)
                 .order('game_date', { ascending: false })
                 .limit(limit);
 

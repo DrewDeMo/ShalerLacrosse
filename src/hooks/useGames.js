@@ -17,7 +17,11 @@ export function useGames(limit = null) {
 
             let query = supabase
                 .from('games')
-                .select('*')
+                .select(`
+                    *,
+                    home:home_team_id(id, name, short_name, logo_url, primary_color, secondary_color),
+                    opponent:opponent_team_id(id, name, short_name, logo_url, primary_color, secondary_color)
+                `)
                 .gte('date', new Date().toISOString().split('T')[0])
                 .order('date', { ascending: true });
 

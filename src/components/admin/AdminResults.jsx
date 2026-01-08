@@ -212,9 +212,23 @@ function ResultForm({ result, onClose, onSuccess }) {
         setError('');
 
         try {
+            // Fetch the opponent team name for the opponent field (for backward compatibility)
+            let opponentName = '';
+            if (formData.opponent_team_id) {
+                const { data: teamData, error: teamError } = await supabase
+                    .from('teams')
+                    .select('name')
+                    .eq('id', formData.opponent_team_id)
+                    .single();
+
+                if (teamError) throw teamError;
+                opponentName = teamData.name;
+            }
+
             // Convert scores to integers
             const dataToSubmit = {
                 ...formData,
+                opponent: opponentName, // Set opponent name for backward compatibility
                 titans_score: parseInt(formData.titans_score),
                 opponent_score: parseInt(formData.opponent_score),
                 leading_scorer_goals: formData.leading_scorer_goals
@@ -308,7 +322,7 @@ function ResultForm({ result, onClose, onSuccess }) {
                                 onChange={(e) =>
                                     setFormData({ ...formData, opponent_score: e.target.value })
                                 }
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors text-navy"
                             />
                         </div>
                     </div>
