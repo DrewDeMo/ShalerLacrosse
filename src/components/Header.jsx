@@ -1,7 +1,14 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export default function Header() {
     const [scrolled, setScrolled] = useState(false);
+    const location = useLocation();
+
+    // Don't show header on admin pages
+    if (location.pathname.startsWith('/admin')) {
+        return null;
+    }
 
     useEffect(() => {
         const handleScroll = () => {
