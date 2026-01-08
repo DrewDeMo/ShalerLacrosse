@@ -2,7 +2,12 @@ import { useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Upload, X } from 'lucide-react';
 
-export default function ImageUpload({ currentImage, onImageUploaded }) {
+export default function ImageUpload({
+    currentImage,
+    onImageUploaded,
+    bucketName = 'player-photos',
+    label = 'Player Photo'
+}) {
     const [uploading, setUploading] = useState(false);
     const [preview, setPreview] = useState(currentImage);
     const [isDragging, setIsDragging] = useState(false);
@@ -26,14 +31,14 @@ export default function ImageUpload({ currentImage, onImageUploaded }) {
 
             // Upload to Supabase Storage
             const { data, error } = await supabase.storage
-                .from('player-photos')
+                .from(bucketName)
                 .upload(filePath, file);
 
             if (error) throw error;
 
             // Get public URL
             const { data: urlData } = supabase.storage
-                .from('player-photos')
+                .from(bucketName)
                 .getPublicUrl(filePath);
 
             const publicUrl = urlData.publicUrl;
@@ -85,7 +90,7 @@ export default function ImageUpload({ currentImage, onImageUploaded }) {
     return (
         <div>
             <label className="block text-sm font-medium text-navy mb-2">
-                Player Photo
+                {label}
             </label>
 
             {preview ? (
@@ -102,8 +107,8 @@ export default function ImageUpload({ currentImage, onImageUploaded }) {
             ) : (
                 <label
                     className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer transition-all ${isDragging
-                            ? 'border-red bg-red/5 scale-105'
-                            : 'border-gray-300 hover:bg-gray-50'
+                        ? 'border-red bg-red/5 scale-105'
+                        : 'border-gray-300 hover:bg-gray-50'
                         }`}
                     onDragEnter={handleDragEnter}
                     onDragOver={handleDragOver}

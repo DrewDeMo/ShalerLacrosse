@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Plus, Edit2, Trash2 } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
+import TeamSelector from './TeamSelector';
 
 export default function AdminResults() {
     const [results, setResults] = useState([]);
@@ -17,7 +18,11 @@ export default function AdminResults() {
         try {
             const { data, error } = await supabase
                 .from('results')
-                .select('*')
+                .select(`
+                    *,
+                    opponent:opponent_team_id(id, name, logo_url, primary_color, secondary_color),
+                    home:home_team_id(id, name, logo_url, primary_color, secondary_color)
+                `)
                 .order('game_date', { ascending: false });
 
             if (error) throw error;
@@ -116,7 +121,7 @@ export default function AdminResults() {
                                             {format(parseISO(result.game_date), 'MMM d, yyyy')}
                                         </td>
                                         <td className="px-6 py-4 text-sm font-medium text-navy">
-                                            {result.opponent}
+                                            {result.opponent?.name || 'Unknown Team'}
                                         </td>
                                         <td className="px-6 py-4 text-sm font-semibold text-navy">
                                             {result.titans_score} - {result.opponent_score}
@@ -164,7 +169,8 @@ export default function AdminResults() {
 function ResultForm({ result, onClose, onSuccess }) {
     const [formData, setFormData] = useState({
         game_date: result?.game_date || '',
-        opponent: result?.opponent || '',
+        opponent_team_id: result?.opponent_team_id || '',
+        home_team_id: result?.home_team_id || '',
         titans_score: result?.titans_score || 0,
         opponent_score: result?.opponent_score || 0,
         location: result?.location || '',
@@ -175,6 +181,30 @@ function ResultForm({ result, onClose, onSuccess }) {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        // Auto-populate home team ID from settings
+        if (!result) {
+            fetchHomeTeam();
+        }
+    }, []);
+
+    const fetchHomeTeam = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('settings')
+                .select('value')
+                .eq('key', 'home_team_id')
+                .single();
+
+            if (error) throw error;
+            if (data?.value) {
+                setFormData(prev => ({ ...prev, home_team_id: data.value }));
+            }
+        } catch (error) {
+            console.error('Error fetching home team:', error);
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -243,21 +273,11 @@ function ResultForm({ result, onClose, onSuccess }) {
                         />
                     </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-navy mb-2">
-                            Opponent *
-                        </label>
-                        <input
-                            type="text"
-                            required
-                            value={formData.opponent}
-                            onChange={(e) =>
-                                setFormData({ ...formData, opponent: e.target.value })
-                            }
-                            placeholder="North Allegheny Tigers"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors text-navy"
-                        />
-                    </div>
+                    <TeamSelector
+                        value={formData.opponent_team_id}
+                        onChange={(value) => setFormData({ ...formData, opponent_team_id: value })}
+                        required
+                    />
 
                     <div className="grid grid-cols-2 gap-4">
                         <div>

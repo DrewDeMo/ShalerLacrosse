@@ -11,6 +11,7 @@ import AdminLayout from './components/admin/AdminLayout';
 import AdminLogin from './components/admin/AdminLogin';
 import AdminGames from './components/admin/AdminGames';
 import AdminResults from './components/admin/AdminResults';
+import AdminTeams from './components/admin/AdminTeams';
 import AdminPlayers from './components/admin/AdminPlayers';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 
@@ -50,6 +51,7 @@ function App() {
                 <Route index element={<Navigate to="/admin/games" replace />} />
                 <Route path="games" element={<AdminGames />} />
                 <Route path="results" element={<AdminResults />} />
+                <Route path="teams" element={<AdminTeams />} />
                 <Route path="players" element={<AdminPlayers />} />
             </Route>
 

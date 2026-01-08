@@ -1,6 +1,6 @@
 -- ============================================
 -- Shaler Lacrosse - Supabase Database Schema
--- Phase 4: Backend Integration
+-- Phase 7: Teams Management System
 -- ============================================
 
 -- ============================================
@@ -129,23 +129,96 @@ INSERT INTO settings (key, value, description) VALUES
   ('twitter_url', '#', 'Twitter profile URL');
 
 -- ============================================
--- 5. SAMPLE DATA
+-- 5. TEAMS TABLE (Phase 7)
+-- ============================================
+CREATE TABLE teams (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()),
+  name TEXT NOT NULL UNIQUE,
+  short_name TEXT,
+  logo_url TEXT,
+  primary_color TEXT DEFAULT '#000000',
+  secondary_color TEXT DEFAULT '#FFFFFF',
+  conference TEXT,
+  notes TEXT
+);
+
+-- Create index
+CREATE INDEX teams_name_idx ON teams(name);
+
+-- Enable Row Level Security
+ALTER TABLE teams ENABLE ROW LEVEL SECURITY;
+
+-- Allow public read access
+CREATE POLICY "Public can view teams" ON teams
+  FOR SELECT USING (true);
+
+-- Only authenticated users can manage
+CREATE POLICY "Authenticated can insert teams" ON teams
+  FOR INSERT
+  TO authenticated
+  WITH CHECK (true);
+
+CREATE POLICY "Authenticated can update teams" ON teams
+  FOR UPDATE
+  TO authenticated
+  USING (true);
+
+CREATE POLICY "Authenticated can delete teams" ON teams
+  FOR DELETE
+  TO authenticated
+  USING (true);
+
+-- ============================================
+-- 6. UPDATE EXISTING TABLES WITH TEAM REFERENCES (Phase 7)
 -- ============================================
 
--- Insert sample games
-INSERT INTO games (date, time, opponent, location, game_type, season) VALUES
-  ('2025-03-15', '13:00:00', 'North Allegheny Tigers', 'Titans Field • Season Opener', 'home', '2025-26'),
-  ('2025-03-22', '14:00:00', 'Pine-Richland Rams', 'Pine-Richland Stadium', 'away', '2025-26'),
-  ('2025-03-29', '13:00:00', 'Fox Chapel Foxes', 'Titans Field', 'home', '2025-26'),
-  ('2025-04-05', '12:00:00', 'Seneca Valley Raiders', 'NexTier Stadium', 'away', '2025-26'),
-  ('2025-04-12', '13:00:00', 'Hampton Talbots', 'Titans Field • Youth Day', 'home', '2025-26'),
-  ('2025-04-19', '14:00:00', 'Peters Township Indians', 'Peters Township HS', 'away', '2025-26'),
-  ('2025-04-26', '13:00:00', 'Mt. Lebanon Blue Devils', 'Titans Field', 'home', '2025-26'),
-  ('2025-05-03', '15:00:00', 'Upper St. Clair Panthers', 'USC Stadium', 'away', '2025-26');
+-- Add opponent_team_id to games table (renamed for clarity)
+ALTER TABLE games ADD COLUMN opponent_team_id UUID REFERENCES teams(id) ON DELETE SET NULL;
+CREATE INDEX games_opponent_team_id_idx ON games(opponent_team_id);
 
--- Insert sample result (this will show on the site)
-INSERT INTO results (game_date, opponent, titans_score, opponent_score, location, leading_scorer, leading_scorer_goals, season) VALUES
-  ('2025-03-15', 'North Allegheny Tigers', 12, 8, 'Titans Field', 'Jake Morrison', 4, '2025-26');
+-- Add home_team_id to games table
+ALTER TABLE games ADD COLUMN home_team_id UUID REFERENCES teams(id) ON DELETE SET NULL;
+CREATE INDEX games_home_team_id_idx ON games(home_team_id);
+
+-- Add opponent_team_id to results table (renamed for clarity)
+ALTER TABLE results ADD COLUMN opponent_team_id UUID REFERENCES teams(id) ON DELETE SET NULL;
+CREATE INDEX results_opponent_team_id_idx ON results(opponent_team_id);
+
+-- Add home_team_id to results table
+ALTER TABLE results ADD COLUMN home_team_id UUID REFERENCES teams(id) ON DELETE SET NULL;
+CREATE INDEX results_home_team_id_idx ON results(home_team_id);
+
+-- ============================================
+-- 7. SAMPLE DATA
+-- ============================================
+
+-- Insert home team first (Shaler Area Titans)
+INSERT INTO teams (name, short_name, primary_color, secondary_color, conference) VALUES
+  ('Shaler Area Titans', 'Titans', '#C8102E', '#003B5C', 'WPIAL 3A');
+
+-- Insert opponent teams
+INSERT INTO teams (name, short_name, primary_color, secondary_color, conference) VALUES
+  ('North Allegheny Tigers', 'NA Tigers', '#FFD700', '#000000', 'WPIAL 3A'),
+  ('Pine-Richland Rams', 'PR Rams', '#8B0000', '#FFD700', 'WPIAL 3A'),
+  ('Fox Chapel Foxes', 'FC Foxes', '#FF6B00', '#000000', 'WPIAL 3A'),
+  ('Seneca Valley Raiders', 'SV Raiders', '#CC0000', '#FFFFFF', 'WPIAL 3A'),
+  ('Hampton Talbots', 'Hampton', '#003366', '#FFD700', 'WPIAL 3A'),
+  ('Peters Township Indians', 'PT Indians', '#8B0000', '#FFD700', 'WPIAL 3A'),
+  ('Mt. Lebanon Blue Devils', 'Mt. Lebo', '#003087', '#FFFFFF', 'WPIAL 3A'),
+  ('Upper St. Clair Panthers', 'USC Panthers', '#000000', '#FFD700', 'WPIAL 3A');
+
+-- Store home team ID in settings for easy reference
+INSERT INTO settings (key, value, description) VALUES
+  ('home_team_id', (SELECT id FROM teams WHERE name = 'Shaler Area Titans' LIMIT 1)::text, 'Home team (Shaler Area Titans) ID');
+
+-- Note: After creating teams, you can update existing games and results to reference them
+-- Example queries to link existing data:
+-- UPDATE games SET opponent_team_id = (SELECT id FROM teams WHERE name = opponent) WHERE opponent IS NOT NULL;
+-- UPDATE games SET home_team_id = (SELECT id FROM settings WHERE key = 'home_team_id')::uuid WHERE home_team_id IS NULL;
+-- UPDATE results SET opponent_team_id = (SELECT id FROM teams WHERE name = opponent) WHERE opponent IS NOT NULL;
+-- UPDATE results SET home_team_id = (SELECT id FROM settings WHERE key = 'home_team_id')::uuid WHERE home_team_id IS NULL;
 
 -- ============================================
 -- VERIFICATION QUERIES

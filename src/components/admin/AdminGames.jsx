@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Plus, Edit2, Trash2 } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
+import TeamSelector from './TeamSelector';
 
 export default function AdminGames() {
     const [games, setGames] = useState([]);
@@ -17,7 +18,11 @@ export default function AdminGames() {
         try {
             const { data, error } = await supabase
                 .from('games')
-                .select('*')
+                .select(`
+                    *,
+                    opponent:opponent_team_id(id, name),
+                    home:home_team_id(id, name)
+                `)
                 .order('date', { ascending: true });
 
             if (error) throw error;
@@ -114,7 +119,7 @@ export default function AdminGames() {
                                         {format(parseISO(game.date), 'MMM d, yyyy')}
                                     </td>
                                     <td className="px-6 py-4 text-sm font-medium text-navy">
-                                        {game.opponent}
+                                        {game.opponent?.name || 'Unknown Team'}
                                     </td>
                                     <td className="px-6 py-4 text-sm text-navy/70">
                                         {game.location}
@@ -160,7 +165,8 @@ function GameForm({ game, onClose, onSuccess }) {
     const [formData, setFormData] = useState({
         date: game?.date || '',
         time: game?.time || '',
-        opponent: game?.opponent || '',
+        opponent_team_id: game?.opponent_team_id || '',
+        home_team_id: game?.home_team_id || '',
         location: game?.location || '',
         game_type: game?.game_type || 'home',
         notes: game?.notes || '',
@@ -168,6 +174,30 @@ function GameForm({ game, onClose, onSuccess }) {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        // Auto-populate home team ID from settings
+        if (!game) {
+            fetchHomeTeam();
+        }
+    }, []);
+
+    const fetchHomeTeam = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('settings')
+                .select('value')
+                .eq('key', 'home_team_id')
+                .single();
+
+            if (error) throw error;
+            if (data?.value) {
+                setFormData(prev => ({ ...prev, home_team_id: data.value }));
+            }
+        } catch (error) {
+            console.error('Error fetching home team:', error);
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -243,21 +273,11 @@ function GameForm({ game, onClose, onSuccess }) {
                         </div>
                     </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-navy mb-2">
-                            Opponent *
-                        </label>
-                        <input
-                            type="text"
-                            required
-                            value={formData.opponent}
-                            onChange={(e) =>
-                                setFormData({ ...formData, opponent: e.target.value })
-                            }
-                            placeholder="North Allegheny Tigers"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red transition-colors text-navy"
-                        />
-                    </div>
+                    <TeamSelector
+                        value={formData.opponent_team_id}
+                        onChange={(value) => setFormData({ ...formData, opponent_team_id: value })}
+                        required
+                    />
 
                     <div>
                         <label className="block text-sm font-medium text-navy mb-2">

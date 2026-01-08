@@ -1,6 +1,6 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { Calendar, Trophy, Users, LogOut } from 'lucide-react';
+import { Calendar, Trophy, Users, Shield, LogOut } from 'lucide-react';
 
 export default function AdminLayout() {
     const { user, signOut } = useAuth();
@@ -14,6 +14,7 @@ export default function AdminLayout() {
     const navItems = [
         { to: '/admin/games', icon: Calendar, label: 'Games' },
         { to: '/admin/results', icon: Trophy, label: 'Results' },
+        { to: '/admin/teams', icon: Shield, label: 'Teams' },
         { to: '/admin/players', icon: Users, label: 'Players' },
     ];
 
