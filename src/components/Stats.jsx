@@ -195,7 +195,7 @@ export default function Stats() {
     return (
         <section
             ref={sectionRef}
-            className="relative py-16 lg:py-24 px-6 lg:px-12 overflow-hidden"
+            className="relative py-20 lg:py-24 px-6 lg:px-12 overflow-hidden"
         >
             {/* Light gradient background */}
             <div className="absolute inset-0 bg-gradient-to-b from-off-white via-white to-off-white" />
@@ -232,12 +232,12 @@ export default function Stats() {
 
             <div className="relative z-10 max-w-7xl mx-auto">
                 {/* Section Header */}
-                <div className="stats-title text-center mb-12 lg:mb-16">
+                <div className="stats-title text-center mb-12">
                     <div className="inline-flex items-center gap-3 bg-red/10 border border-red/20 px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase text-red mb-4">
                         <span className="w-1.5 h-1.5 bg-red rounded-full animate-pulse" />
                         Season Statistics
                     </div>
-                    <h2 className="font-bebas text-4xl lg:text-5xl text-navy tracking-tight">
+                    <h2 className="font-bebas text-5xl lg:text-6xl text-navy tracking-tight">
                         By The <span className="text-red">Numbers</span>
                     </h2>
                     <p className="text-navy/50 text-sm mt-3 max-w-md mx-auto">

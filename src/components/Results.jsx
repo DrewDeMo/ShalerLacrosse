@@ -103,7 +103,7 @@ export default function Results() {
     const resultBgClass = isTie ? 'bg-amber-500/20 text-amber-400' : (isWin ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400');
 
     return (
-        <section id="results" className="py-24 px-6 md:px-12 bg-navy relative overflow-hidden">
+        <section id="results" className="py-20 lg:py-24 px-6 lg:px-12 bg-navy relative overflow-hidden">
             {/* Grass texture background with duotone effect */}
             <div
                 className="absolute inset-0 pointer-events-none"
@@ -137,15 +137,18 @@ export default function Results() {
                 {isWin ? 'VICTORY' : 'TITANS'}
             </div>
 
-            <div className="max-w-5xl mx-auto relative">
+            <div className="max-w-7xl mx-auto relative">
                 {/* Section Header with athletic styling */}
-                <div className="mb-10">
-                    <div className="flex items-center gap-3 mb-3">
+                <div className="mb-12">
+                    <div className="flex items-center gap-3 mb-4">
                         <div className="w-1 h-8 bg-gradient-to-b from-red to-red/50 rounded-full" />
-                        <span className="text-xs font-bold text-red tracking-[0.3em] uppercase">Latest Update</span>
+                        <div className="inline-flex items-center gap-3 bg-red/10 border border-red/20 px-4 py-2 rounded-full">
+                            <span className="w-1.5 h-1.5 bg-red rounded-full animate-pulse" />
+                            <span className="text-xs font-bold text-red tracking-[0.2em] uppercase">Latest Update</span>
+                        </div>
                     </div>
-                    <h2 className="font-bebas text-5xl md:text-7xl tracking-wide leading-none text-white">
-                        RECENT RESULT
+                    <h2 className="font-bebas text-5xl lg:text-6xl tracking-wide leading-none text-white">
+                        RECENT <span className="text-red">RESULT</span>
                     </h2>
                 </div>
 

@@ -433,7 +433,7 @@ export default function Roster() {
         <section
             ref={sectionRef}
             id="roster"
-            className="relative py-24 px-6 lg:px-12 overflow-hidden"
+            className="relative py-20 lg:py-24 px-6 lg:px-12 overflow-hidden"
         >
             {/* Light background with gradient */}
             <div className="absolute inset-0 bg-gradient-to-b from-off-white via-white to-off-white" />
@@ -480,7 +480,7 @@ export default function Roster() {
 
             <div className="relative z-10 max-w-7xl mx-auto">
                 {/* Section Header - Athletic styling */}
-                <div className="mb-16">
+                <div className="mb-12">
                     <div ref={subtitleRef} className="flex items-center gap-3 mb-4">
                         <div className="w-1 h-8 bg-gradient-to-b from-red to-red/50 rounded-full" />
                         <div className="inline-flex items-center gap-3 bg-red/10 border border-red/20 px-4 py-2 rounded-full">

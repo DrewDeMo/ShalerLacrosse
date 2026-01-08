@@ -241,7 +241,7 @@ export default function CTA() {
     }, []);
 
     return (
-        <section ref={sectionRef} id="contact" className="relative py-24 px-6 lg:px-12 overflow-hidden">
+        <section ref={sectionRef} id="contact" className="relative py-20 lg:py-24 px-6 lg:px-12 overflow-hidden">
             {/* Background */}
             <div className="absolute inset-0 bg-gradient-to-b from-off-white via-white to-slate-50" />
 
@@ -263,11 +263,10 @@ export default function CTA() {
 
             <div className="relative z-10 max-w-7xl mx-auto">
                 {/* Section Header */}
-                <div ref={titleRef} className="text-center mb-16">
-                    <div className="inline-flex items-center gap-3 mb-4">
-                        <div className="w-8 h-px bg-gradient-to-r from-transparent to-red/50" />
+                <div ref={titleRef} className="text-center mb-12">
+                    <div className="inline-flex items-center gap-3 bg-red/10 border border-red/20 px-4 py-2 rounded-full mb-4">
+                        <span className="w-1.5 h-1.5 bg-red rounded-full animate-pulse" />
                         <span className="text-xs font-bold text-red tracking-[0.2em] uppercase">Get Involved</span>
-                        <div className="w-8 h-px bg-gradient-to-l from-transparent to-red/50" />
                     </div>
                     <h2 className="font-bebas text-5xl md:text-6xl tracking-wide leading-none text-navy">
                         CONNECT WITH <span className="text-red">TITANS</span> LACROSSE

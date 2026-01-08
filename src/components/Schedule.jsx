@@ -6,18 +6,19 @@ export default function Schedule() {
 
     if (loading) {
         return (
-            <section id="schedule" className="relative py-20 md:py-28 px-6 md:px-12 overflow-hidden">
+            <section id="schedule" className="relative py-20 lg:py-24 px-6 lg:px-12 overflow-hidden">
                 {/* Red-accented background */}
                 <div className="absolute inset-0 bg-gradient-to-br from-red via-red to-red-600" />
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(6,22,73,0.3),transparent_60%)]" />
 
-                <div className="relative z-10 max-w-6xl mx-auto">
-                    <div className="flex flex-col md:flex-row md:justify-between md:items-end mb-12">
+                <div className="relative z-10 max-w-7xl mx-auto">
+                    <div className="flex flex-col lg:flex-row lg:justify-between lg:items-end mb-12">
                         <div>
-                            <span className="block text-xs font-semibold text-white/80 tracking-[0.2em] uppercase mb-2">
+                            <div className="inline-flex items-center gap-3 bg-white/10 border border-white/20 px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase text-white mb-4">
+                                <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                                 Upcoming Games
-                            </span>
-                            <h2 className="font-bebas text-5xl md:text-6xl tracking-wide text-white">
+                            </div>
+                            <h2 className="font-bebas text-5xl lg:text-6xl tracking-wide text-white">
                                 SCHEDULE
                             </h2>
                         </div>
@@ -40,18 +41,19 @@ export default function Schedule() {
 
     if (error) {
         return (
-            <section id="schedule" className="relative py-20 md:py-28 px-6 md:px-12 overflow-hidden">
+            <section id="schedule" className="relative py-20 lg:py-24 px-6 lg:px-12 overflow-hidden">
                 {/* Red-accented background */}
                 <div className="absolute inset-0 bg-gradient-to-br from-red via-red to-red-600" />
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(6,22,73,0.3),transparent_60%)]" />
 
-                <div className="relative z-10 max-w-6xl mx-auto">
-                    <div className="flex flex-col md:flex-row md:justify-between md:items-end mb-12">
+                <div className="relative z-10 max-w-7xl mx-auto">
+                    <div className="flex flex-col lg:flex-row lg:justify-between lg:items-end mb-12">
                         <div>
-                            <span className="block text-xs font-semibold text-white/80 tracking-[0.2em] uppercase mb-2">
+                            <div className="inline-flex items-center gap-3 bg-white/10 border border-white/20 px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase text-white mb-4">
+                                <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                                 Upcoming Games
-                            </span>
-                            <h2 className="font-bebas text-5xl md:text-6xl tracking-wide text-white">
+                            </div>
+                            <h2 className="font-bebas text-5xl lg:text-6xl tracking-wide text-white">
                                 SCHEDULE
                             </h2>
                         </div>
@@ -65,7 +67,7 @@ export default function Schedule() {
     }
 
     return (
-        <section id="schedule" className="relative py-20 md:py-28 px-6 md:px-12 overflow-hidden">
+        <section id="schedule" className="relative py-20 lg:py-24 px-6 lg:px-12 overflow-hidden">
             {/* Red-accented background with subtle gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-red via-red to-red-600" />
 
@@ -87,20 +89,21 @@ export default function Schedule() {
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-            <div className="relative z-10 max-w-6xl mx-auto">
+            <div className="relative z-10 max-w-7xl mx-auto">
                 {/* Header */}
-                <div className="flex flex-col md:flex-row md:justify-between md:items-end mb-12">
+                <div className="flex flex-col lg:flex-row lg:justify-between lg:items-end mb-12">
                     <div>
-                        <span className="block text-xs font-semibold text-white/80 tracking-[0.2em] uppercase mb-2">
+                        <div className="inline-flex items-center gap-3 bg-white/10 border border-white/20 px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase text-white mb-4">
+                            <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                             Upcoming Games
-                        </span>
-                        <h2 className="font-bebas text-5xl md:text-6xl tracking-wide text-white">
+                        </div>
+                        <h2 className="font-bebas text-5xl lg:text-6xl tracking-wide text-white">
                             SCHEDULE
                         </h2>
                     </div>
                     <a
                         href="#full-schedule"
-                        className="inline-flex items-center gap-2 text-white font-semibold text-sm uppercase tracking-wider hover:gap-4 transition-all duration-300 mt-4 md:mt-0 group"
+                        className="inline-flex items-center gap-2 text-white font-semibold text-sm uppercase tracking-wider hover:gap-4 transition-all duration-300 mt-4 lg:mt-0 group"
                     >
                         View Full Schedule
                         <svg
