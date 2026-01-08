@@ -159,3 +159,13 @@ select option {
     opacity: 0.3 !important;
     cursor: not-allowed !important;
 }
+
+/* Sponsors Swiper - Smooth continuous scroll */
+.sponsors-swiper {
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.sponsors-swiper .swiper-wrapper {
+    transition-timing-function: linear !important;
+}

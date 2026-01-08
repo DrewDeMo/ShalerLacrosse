@@ -5,6 +5,7 @@ import Stats from './components/Stats';
 import Schedule from './components/Schedule';
 import Results from './components/Results';
 import Roster from './components/Roster';
+import Sponsors from './components/Sponsors';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
 import AdminLayout from './components/admin/AdminLayout';
@@ -20,6 +21,7 @@ function HomePage() {
         <>
             <Header />
             <Hero />
+            <Sponsors />
             <Stats />
             <Schedule />
             <Results />
