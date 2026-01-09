@@ -6,7 +6,7 @@ import Schedule from './components/Schedule';
 import Results from './components/Results';
 import Roster from './components/Roster';
 import Sponsors from './components/Sponsors';
-import CTA from './components/CTA';
+import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminLogin from './components/admin/AdminLogin';
@@ -26,7 +26,7 @@ function HomePage() {
             <Schedule />
             <Results />
             <Roster />
-            <CTA />
+            <ContactForm />
             <Footer />
         </>
     );
