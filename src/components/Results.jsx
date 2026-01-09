@@ -3,8 +3,8 @@ import { format, parseISO } from 'date-fns';
 import TeamLogo from './common/TeamLogo';
 
 /**
- * Results Component - Premium 2025/26 Athletic Design
- * Features: Clean SVG icons, Home/Away visual indicators, Modern athletic styling
+ * Results Component - Responsive 2025/26 Athletic Design
+ * Features: Mobile-first responsive design, consistent logo sizing for any aspect ratio
  */
 
 // Clean SVG Icon Components
@@ -32,14 +32,14 @@ const StarIcon = () => (
     </svg>
 );
 
-const HomeIcon = () => (
-    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+const HomeIcon = ({ className = "w-4 h-4" }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 2L2 12h3v9h6v-6h2v6h6v-9h3L12 2z" />
     </svg>
 );
 
-const AwayIcon = () => (
-    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+const AwayIcon = ({ className = "w-4 h-4" }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" />
         <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
     </svg>
@@ -61,6 +61,123 @@ const CheckCircleIcon = () => (
     </svg>
 );
 
+/**
+ * TeamDisplay Component - Handles logo display with consistent sizing
+ * Uses fixed square container with max-height/max-width constraints
+ * to handle logos of varying aspect ratios
+ */
+const TeamDisplay = ({ team, score, isWinner, isHome, teamColor, position }) => {
+    const isLeft = position === 'left';
+
+    return (
+        <div className={`flex flex-col items-center ${isLeft ? 'sm:items-end' : 'sm:items-start'}`}>
+            {/* Home/Away Badge */}
+            <div className={`mb-2 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 ${isHome
+                ? 'bg-gradient-to-r from-red to-red/80 text-white shadow-lg shadow-red/20'
+                : 'bg-white/10 text-white/70 border border-white/20'
+                }`}>
+                {isHome ? <HomeIcon className="w-3 h-3" /> : <AwayIcon className="w-3 h-3" />}
+                <span>{isHome ? 'HOME' : 'AWAY'}</span>
+            </div>
+
+            {/* Logo Container - Fixed square with max constraints for consistent alignment */}
+            <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 flex items-center justify-center mb-2">
+                <div className="w-full h-full flex items-center justify-center">
+                    <TeamLogo
+                        logoUrl={team.logo_url}
+                        teamName={team.name}
+                        primaryColor={teamColor}
+                        size="large"
+                    />
+                </div>
+            </div>
+
+            {/* Team Name */}
+            <div className={`font-bebas text-sm sm:text-base md:text-lg lg:text-xl tracking-wide text-center ${isWinner ? 'text-white' : 'text-white/70'
+                }`}>
+                {team.short_name || team.name}
+                {isWinner && (
+                    <div className="flex justify-center mt-1">
+                        <svg className="w-3 h-3 text-emerald-400" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                        </svg>
+                    </div>
+                )}
+            </div>
+
+            {/* Score (visible on mobile stacked layout) */}
+            <div className="sm:hidden mt-3">
+                <span className={`font-bebas text-4xl ${isWinner ? 'text-emerald-400' : 'text-white/50'
+                    }`} style={{
+                        textShadow: isWinner ? '0 0 30px rgba(16, 185, 129, 0.5)' : 'none'
+                    }}>
+                    {score}
+                </span>
+            </div>
+        </div>
+    );
+};
+
+/**
+ * ScoreDisplay Component - Central score display for tablet/desktop
+ */
+const ScoreDisplay = ({ titansScore, opponentScore, isWin, isTie }) => {
+    const winColor = '#10B981';
+    const lossColor = '#EF4444';
+    const tieColor = '#F59E0B';
+
+    return (
+        <div className="hidden sm:flex flex-col items-center justify-center px-4 md:px-8">
+            {/* Score Box */}
+            <div
+                className="flex items-center gap-3 md:gap-6 px-4 md:px-8 py-3 md:py-4 rounded-2xl"
+                style={{
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))',
+                    boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2), 0 1px 2px rgba(255,255,255,0.05)'
+                }}
+            >
+                {/* Titans Score */}
+                <span
+                    className={`font-bebas text-4xl md:text-6xl lg:text-7xl ${isWin ? 'text-emerald-400' : (isTie ? 'text-amber-400' : 'text-white')
+                        }`}
+                    style={{
+                        textShadow: isWin ? `0 0 40px ${winColor}60` : 'none',
+                        minWidth: '60px',
+                        textAlign: 'center'
+                    }}
+                >
+                    {titansScore}
+                </span>
+
+                {/* Divider */}
+                <div className="flex flex-col items-center gap-1">
+                    <div className="w-px h-4 md:h-6 bg-white/20" />
+                    <span className="text-white/40 text-[10px] md:text-xs font-bold tracking-wider">VS</span>
+                    <div className="w-px h-4 md:h-6 bg-white/20" />
+                </div>
+
+                {/* Opponent Score */}
+                <span
+                    className={`font-bebas text-4xl md:text-6xl lg:text-7xl ${!isWin && !isTie ? 'text-red-400' : (isTie ? 'text-amber-400' : 'text-white/50')
+                        }`}
+                    style={{
+                        textShadow: !isWin && !isTie ? `0 0 40px ${lossColor}60` : 'none',
+                        minWidth: '60px',
+                        textAlign: 'center'
+                    }}
+                >
+                    {opponentScore}
+                </span>
+            </div>
+
+            {/* FINAL Label */}
+            <div className="mt-3 bg-white/10 px-4 py-1 rounded-full">
+                <span className="text-[10px] font-bold text-white/60 tracking-[0.2em] uppercase">Final</span>
+            </div>
+        </div>
+    );
+};
+
 export default function Results() {
     const { results, loading, error } = useResults(1);
 
@@ -72,38 +189,35 @@ export default function Results() {
     const latestResult = results[0];
     const isWin = latestResult.titans_score > latestResult.opponent_score;
     const isTie = latestResult.titans_score === latestResult.opponent_score;
-
-    // Determine which team is home/away
     const isHomeGame = latestResult.game_type === 'home';
 
-    // Determine teams - Titans always on left
+    // Team data
     const titansTeam = latestResult.home || {
         name: 'Shaler Area Titans',
+        short_name: 'Titans',
         logo_url: null,
-        primary_color: '#ad1d34',
-        secondary_color: '#061649'
+        primary_color: '#ad1d34'
     };
 
     const opponentTeam = latestResult.opponent || {
         name: latestResult.opponent || 'Opponent',
+        short_name: null,
         logo_url: null,
-        primary_color: '#666666',
-        secondary_color: '#999999'
+        primary_color: '#666666'
     };
 
-    // Get team colors
+    // Colors
     const titansColor = titansTeam.primary_color || '#ad1d34';
     const opponentColor = opponentTeam.primary_color || '#666666';
     const winColor = '#10B981';
     const lossColor = '#EF4444';
     const tieColor = '#F59E0B';
-
     const resultColor = isTie ? tieColor : (isWin ? winColor : lossColor);
     const resultText = isTie ? 'TIE' : (isWin ? 'VICTORY' : 'DEFEAT');
     const resultBgClass = isTie ? 'bg-amber-500/20 text-amber-400' : (isWin ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400');
 
     return (
-        <section id="results" className="py-20 lg:py-24 px-6 lg:px-12 bg-navy relative overflow-hidden">
+        <section id="results" className="py-16 lg:py-24 px-4 sm:px-6 lg:px-12 bg-navy relative overflow-hidden">
             {/* Grass texture background with duotone effect */}
             <div
                 className="absolute inset-0 pointer-events-none"
@@ -116,7 +230,7 @@ export default function Results() {
                     mixBlendMode: 'overlay'
                 }}
             />
-            {/* Navy/Red duotone color overlay for grass */}
+            {/* Navy/Red duotone color overlay */}
             <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
@@ -124,7 +238,7 @@ export default function Results() {
                     mixBlendMode: 'color'
                 }}
             />
-            {/* Radial vignette to fade edges and focus center */}
+            {/* Radial vignette */}
             <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
@@ -132,14 +246,14 @@ export default function Results() {
                 }}
             />
 
-            {/* Dynamic background text effect */}
-            <div className="absolute inset-0 flex items-center justify-center font-bebas text-[20vw] text-white/[0.03] select-none pointer-events-none tracking-wider">
+            {/* Background text effect */}
+            <div className="absolute inset-0 flex items-center justify-center font-bebas text-[15vw] sm:text-[20vw] text-white/[0.03] select-none pointer-events-none tracking-wider">
                 {isWin ? 'VICTORY' : 'TITANS'}
             </div>
 
-            <div className="max-w-7xl mx-auto relative">
-                {/* Section Header with athletic styling */}
-                <div className="mb-12">
+            <div className="max-w-5xl mx-auto relative">
+                {/* Section Header */}
+                <div className="mb-8 sm:mb-12">
                     <div className="flex items-center gap-3 mb-4">
                         <div className="w-1 h-8 bg-gradient-to-b from-red to-red/50 rounded-full" />
                         <div className="inline-flex items-center gap-3 bg-red/10 border border-red/20 px-4 py-2 rounded-full">
@@ -147,23 +261,23 @@ export default function Results() {
                             <span className="text-xs font-bold text-red tracking-[0.2em] uppercase">Latest Update</span>
                         </div>
                     </div>
-                    <h2 className="font-bebas text-5xl lg:text-6xl tracking-wide leading-none text-white">
+                    <h2 className="font-bebas text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-none text-white">
                         RECENT <span className="text-red">RESULT</span>
                     </h2>
                 </div>
 
-                {/* Premium Result Card */}
+                {/* Result Card */}
                 <div
-                    className="relative rounded-3xl overflow-hidden group"
+                    className="relative rounded-2xl sm:rounded-3xl overflow-hidden"
                     style={{
                         background: 'linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))',
                         backdropFilter: 'blur(20px)',
                         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255,255,255,0.1)'
                     }}
                 >
-                    {/* Animated gradient border */}
+                    {/* Gradient border */}
                     <div
-                        className="absolute inset-0 rounded-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"
+                        className="absolute inset-0 rounded-2xl sm:rounded-3xl opacity-50"
                         style={{
                             padding: '1px',
                             background: `linear-gradient(135deg, ${titansColor}40, transparent, ${opponentColor}40)`,
@@ -173,249 +287,135 @@ export default function Results() {
                         }}
                     />
 
-                    {/* Top accent bar with result color */}
+                    {/* Top accent bar */}
                     <div
-                        className="absolute top-0 left-0 right-0 h-1.5"
+                        className="absolute top-0 left-0 right-0 h-1"
                         style={{
                             background: `linear-gradient(90deg, ${resultColor}, ${resultColor}80, transparent 80%)`
                         }}
                     />
 
-                    <div className="p-6 md:p-10 lg:p-12">
-                        {/* Header Row: Date + Result Badge */}
-                        <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
-                            {/* Date with clean icon */}
-                            <div className="flex items-center gap-3 text-white/60">
+                    <div className="p-5 sm:p-6 md:p-8 lg:p-10">
+                        {/* Header Row */}
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 sm:mb-8">
+                            {/* Date */}
+                            <div className="flex items-center gap-2 text-white/60">
                                 <div className="p-2 rounded-lg bg-white/5">
                                     <CalendarIcon />
                                 </div>
-                                <span className="text-sm font-medium tracking-wide">
-                                    {format(parseISO(latestResult.game_date), 'EEEE, MMMM d, yyyy')}
+                                <span className="text-sm font-medium">
+                                    {format(parseISO(latestResult.game_date), 'EEE, MMM d, yyyy')}
                                 </span>
                             </div>
 
-                            {/* Result Badge - Premium design */}
+                            {/* Result Badge */}
                             <div
-                                className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest flex items-center gap-2.5 ${resultBgClass}`}
+                                className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest flex items-center gap-2 ${resultBgClass}`}
                                 style={{
                                     boxShadow: `0 0 30px ${resultColor}25, inset 0 1px 1px rgba(255,255,255,0.1)`,
                                     border: `1px solid ${resultColor}30`
                                 }}
                             >
                                 {isWin && <CheckCircleIcon />}
-                                {isTie && <span className="text-lg">⚖</span>}
-                                <span className="font-bebas text-base tracking-wider">{resultText}</span>
+                                {isTie && <span className="text-base">⚖</span>}
+                                <span className="font-bebas text-sm tracking-wider">{resultText}</span>
                             </div>
                         </div>
 
-                        {/* Team Matchup & Score - Premium Layout */}
-                        <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-6 lg:gap-10 mb-10">
-                            {/* Shaler Titans (Left) */}
-                            <div className="text-center relative group/titans cursor-default">
-                                {/* Home/Away Badge for Titans - Enhanced with icon animation */}
-                                <div className={`absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5 z-10 transition-all duration-300 group-hover/titans:scale-105 ${isHomeGame
-                                    ? 'bg-gradient-to-r from-red via-red to-red/80 text-white shadow-lg shadow-red/20'
-                                    : 'bg-white/10 text-white/70 border border-white/10 hover:bg-white/15'
-                                    }`}>
-                                    {isHomeGame ? (
-                                        <>
-                                            <HomeIcon />
-                                            <span>HOME</span>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <AwayIcon />
-                                            <span>AWAY</span>
-                                        </>
-                                    )}
+                        {/* Mobile: Stacked Layout with VS divider */}
+                        <div className="sm:hidden">
+                            <div className="flex items-center justify-between gap-4 mb-4">
+                                {/* Titans */}
+                                <TeamDisplay
+                                    team={titansTeam}
+                                    score={latestResult.titans_score}
+                                    isWinner={isWin}
+                                    isHome={isHomeGame}
+                                    teamColor={titansColor}
+                                    position="left"
+                                />
+
+                                {/* VS Divider */}
+                                <div className="flex flex-col items-center">
+                                    <div className="w-px h-8 bg-white/20" />
+                                    <span className="text-white/30 text-xs font-bold my-2">VS</span>
+                                    <div className="w-px h-8 bg-white/20" />
                                 </div>
 
-                                {/* Interactive Team Card */}
-                                <div
-                                    className="relative mx-auto pt-8 pb-4 px-4 rounded-2xl transition-all duration-300 group-hover/titans:bg-white/5"
-                                    style={{
-                                        filter: isWin ? `drop-shadow(0 0 25px ${winColor}30)` : 'none'
-                                    }}
-                                >
-                                    {/* Win indicator glow ring */}
-                                    {isWin && (
-                                        <div
-                                            className="absolute inset-0 rounded-2xl animate-pulse"
-                                            style={{
-                                                background: `radial-gradient(circle at center, ${winColor}10, transparent 70%)`,
-                                                animation: 'pulse 2s ease-in-out infinite'
-                                            }}
-                                        />
-                                    )}
-
-                                    <TeamLogo
-                                        logoUrl={titansTeam.logo_url}
-                                        teamName={titansTeam.name}
-                                        primaryColor={titansColor}
-                                        size="large"
-                                        className="mx-auto mb-3"
-                                    />
-
-                                    {/* Team Name with winner badge */}
-                                    <div className={`font-bebas text-lg md:text-xl tracking-wide transition-colors duration-300 ${isWin ? 'text-white' : 'text-white/80'}`}>
-                                        {titansTeam.short_name || 'Titans'}
-                                        {isWin && (
-                                            <span className="ml-2 inline-flex items-center">
-                                                <svg className="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="currentColor">
-                                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                                                </svg>
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
+                                {/* Opponent */}
+                                <TeamDisplay
+                                    team={opponentTeam}
+                                    score={latestResult.opponent_score}
+                                    isWinner={!isWin && !isTie}
+                                    isHome={!isHomeGame}
+                                    teamColor={opponentColor}
+                                    position="right"
+                                />
                             </div>
 
-                            {/* Score Display - Premium Athletic Style */}
-                            <div className="flex flex-col items-center">
-                                {/* Score container with athletic diamond shape hint */}
-                                <div
-                                    className="flex items-center justify-center gap-2 md:gap-4 lg:gap-6 px-4 md:px-6 py-4 rounded-2xl group/score cursor-default transition-all duration-300 hover:scale-105"
-                                    style={{
-                                        background: 'linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))',
-                                        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2), 0 1px 2px rgba(255,255,255,0.05)'
-                                    }}
-                                >
-                                    {/* Titans Score */}
-                                    <div className="text-center min-w-[60px] md:min-w-[80px]">
-                                        <span
-                                            className={`font-bebas text-5xl md:text-7xl lg:text-8xl leading-none transition-all duration-300 inline-block group-hover/score:scale-110 ${isWin ? 'text-emerald-400' : (isTie ? 'text-amber-400' : 'text-white')
-                                                }`}
-                                            style={{
-                                                textShadow: isWin ? `0 0 40px ${winColor}60, 0 4px 20px rgba(0,0,0,0.3)` : '0 4px 20px rgba(0,0,0,0.3)',
-                                                WebkitTextStroke: isWin ? `1px ${winColor}` : 'none'
-                                            }}
-                                        >
-                                            {latestResult.titans_score}
-                                        </span>
-                                    </div>
-
-                                    {/* Divider with VS */}
-                                    <div className="flex flex-col items-center gap-1 mx-2">
-                                        <div className="w-px h-4 md:h-6 bg-white/20" />
-                                        <span className="text-white/40 text-xs font-bold tracking-widest">VS</span>
-                                        <div className="w-px h-4 md:h-6 bg-white/20" />
-                                    </div>
-
-                                    {/* Opponent Score */}
-                                    <div className="text-center min-w-[60px] md:min-w-[80px]">
-                                        <span
-                                            className={`font-bebas text-5xl md:text-7xl lg:text-8xl leading-none transition-all duration-300 inline-block group-hover/score:scale-110 ${!isWin && !isTie ? 'text-red-400' : (isTie ? 'text-amber-400' : 'text-white/50')
-                                                }`}
-                                            style={{
-                                                textShadow: !isWin && !isTie ? `0 0 40px ${lossColor}60, 0 4px 20px rgba(0,0,0,0.3)` : '0 4px 20px rgba(0,0,0,0.3)'
-                                            }}
-                                        >
-                                            {latestResult.opponent_score}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {/* FINAL label below score - properly centered */}
-                                <div className="mt-4 bg-white/10 px-4 py-1 rounded-full backdrop-blur-sm hover:bg-white/15 transition-colors">
-                                    <span className="text-[10px] font-bold text-white/60 tracking-[0.2em] uppercase">Final</span>
-                                </div>
-                            </div>
-
-                            {/* Opponent (Right) */}
-                            <div className="text-center relative group/opponent cursor-default">
-                                {/* Home/Away Badge for Opponent - Enhanced styling */}
-                                <div className={`absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5 z-10 transition-all duration-300 group-hover/opponent:scale-105 ${!isHomeGame
-                                    ? 'bg-gradient-to-r from-slate-600 via-slate-600 to-slate-600/80 text-white shadow-lg shadow-slate-600/20'
-                                    : 'bg-white/10 text-white/70 border border-white/10 hover:bg-white/15'
-                                    }`}>
-                                    {!isHomeGame ? (
-                                        <>
-                                            <HomeIcon />
-                                            <span>HOME</span>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <AwayIcon />
-                                            <span>AWAY</span>
-                                        </>
-                                    )}
-                                </div>
-
-                                {/* Interactive Team Card */}
-                                <div
-                                    className="relative mx-auto pt-8 pb-4 px-4 rounded-2xl transition-all duration-300 group-hover/opponent:bg-white/5"
-                                    style={{
-                                        filter: !isWin && !isTie ? `drop-shadow(0 0 25px ${lossColor}30)` : 'none'
-                                    }}
-                                >
-                                    {/* Loss indicator glow ring (if opponent won) */}
-                                    {!isWin && !isTie && (
-                                        <div
-                                            className="absolute inset-0 rounded-2xl animate-pulse"
-                                            style={{
-                                                background: `radial-gradient(circle at center, ${lossColor}10, transparent 70%)`,
-                                                animation: 'pulse 2s ease-in-out infinite'
-                                            }}
-                                        />
-                                    )}
-
-                                    <TeamLogo
-                                        logoUrl={opponentTeam.logo_url}
-                                        teamName={opponentTeam.name}
-                                        primaryColor={opponentColor}
-                                        size="large"
-                                        className="mx-auto mb-3"
-                                    />
-
-                                    {/* Team Name with winner badge (if they won) */}
-                                    <div className={`font-bebas text-lg md:text-xl tracking-wide transition-colors duration-300 ${!isWin && !isTie ? 'text-white' : 'text-white/60'}`}>
-                                        {opponentTeam.short_name || opponentTeam.name}
-                                        {!isWin && !isTie && (
-                                            <span className="ml-2 inline-flex items-center">
-                                                <svg className="w-4 h-4 text-red-400" viewBox="0 0 24 24" fill="currentColor">
-                                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                                                </svg>
-                                            </span>
-                                        )}
-                                    </div>
+                            {/* Mobile FINAL Label */}
+                            <div className="flex justify-center mt-4">
+                                <div className="bg-white/10 px-4 py-1.5 rounded-full flex items-center justify-center">
+                                    <span className="text-[10px] font-bold text-white/60 tracking-[0.2em] uppercase leading-none">Final</span>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Game Details - Premium Stats Bar */}
-                        <div
-                            className="flex justify-center gap-6 md:gap-10 lg:gap-16 pt-8 mt-4 border-t border-white/10 flex-wrap"
-                        >
+                        {/* Tablet/Desktop: Horizontal Layout */}
+                        <div className="hidden sm:flex items-center justify-center gap-6 md:gap-8 lg:gap-12">
+                            {/* Titans */}
+                            <TeamDisplay
+                                team={titansTeam}
+                                score={latestResult.titans_score}
+                                isWinner={isWin}
+                                isHome={isHomeGame}
+                                teamColor={titansColor}
+                                position="left"
+                            />
+
+                            {/* Central Score */}
+                            <ScoreDisplay
+                                titansScore={latestResult.titans_score}
+                                opponentScore={latestResult.opponent_score}
+                                isWin={isWin}
+                                isTie={isTie}
+                            />
+
+                            {/* Opponent */}
+                            <TeamDisplay
+                                team={opponentTeam}
+                                score={latestResult.opponent_score}
+                                isWinner={!isWin && !isTie}
+                                isHome={!isHomeGame}
+                                teamColor={opponentColor}
+                                position="right"
+                            />
+                        </div>
+
+                        {/* Game Details Bar */}
+                        <div className="flex flex-wrap justify-center gap-4 md:gap-8 pt-6 mt-6 border-t border-white/10">
                             {/* Location */}
-                            <div className="flex items-center gap-3 group/item">
-                                <div className="p-2.5 rounded-xl bg-white/5 group-hover/item:bg-white/10 transition-colors">
+                            <div className="flex items-center gap-2">
+                                <div className="p-2 rounded-lg bg-white/5">
                                     <LocationIcon />
                                 </div>
                                 <div>
-                                    <div className="text-[10px] uppercase tracking-[0.2em] text-white/40 mb-0.5">
-                                        Location
-                                    </div>
-                                    <div className="font-semibold text-white text-sm">
-                                        {latestResult.location}
-                                    </div>
+                                    <div className="text-[9px] uppercase tracking-wider text-white/40 mb-0.5">Location</div>
+                                    <div className="font-medium text-white text-sm">{latestResult.location}</div>
                                 </div>
                             </div>
 
                             {/* Leading Scorer */}
                             {latestResult.leading_scorer && (
-                                <div className="flex items-center gap-3 group/item">
-                                    <div className="p-2.5 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-500/5 group-hover/item:from-amber-500/30 group-hover/item:to-amber-500/10 transition-colors">
+                                <div className="flex items-center gap-2">
+                                    <div className="p-2 rounded-lg bg-amber-500/10">
                                         <StarIcon />
                                     </div>
                                     <div>
-                                        <div className="text-[10px] uppercase tracking-[0.2em] text-white/40 mb-0.5">
-                                            Top Scorer
-                                        </div>
-                                        <div className="font-semibold text-white text-sm flex items-center gap-2">
+                                        <div className="text-[9px] uppercase tracking-wider text-white/40 mb-0.5">Top Scorer</div>
+                                        <div className="font-medium text-white text-sm flex items-center gap-2">
                                             <span>{latestResult.leading_scorer}</span>
-                                            <span
-                                                className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-400"
-                                            >
+                                            <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-400">
                                                 {latestResult.leading_scorer_goals}G
                                             </span>
                                         </div>
@@ -423,33 +423,31 @@ export default function Results() {
                                 </div>
                             )}
 
-                            {/* Game Type Badge */}
-                            <div className="flex items-center gap-3 group/item">
-                                <div className="p-2.5 rounded-xl bg-white/5 group-hover/item:bg-white/10 transition-colors">
+                            {/* Game Type */}
+                            <div className="flex items-center gap-2">
+                                <div className="p-2 rounded-lg bg-white/5">
                                     <TrophyIcon />
                                 </div>
                                 <div>
-                                    <div className="text-[10px] uppercase tracking-[0.2em] text-white/40 mb-0.5">
-                                        Game Type
-                                    </div>
-                                    <div className="font-semibold text-white text-sm capitalize">
+                                    <div className="text-[9px] uppercase tracking-wider text-white/40 mb-0.5">Game Type</div>
+                                    <div className="font-medium text-white text-sm capitalize">
                                         {latestResult.season_type || 'Regular Season'}
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Notes if any */}
+                        {/* Notes */}
                         {latestResult.notes && (
-                            <div className="mt-8 pt-6 border-t border-white/10">
+                            <div className="mt-6 pt-4 border-t border-white/10">
                                 <div
-                                    className="flex items-start gap-3 p-4 rounded-xl"
+                                    className="flex items-start gap-2 p-3 rounded-xl"
                                     style={{
                                         background: 'linear-gradient(135deg, rgba(255,255,255,0.03), transparent)'
                                     }}
                                 >
-                                    <div className="p-1.5 rounded-lg bg-white/10 mt-0.5">
-                                        <svg className="w-3.5 h-3.5 text-white/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <div className="p-1.5 rounded-lg bg-white/10 mt-0.5 shrink-0">
+                                        <svg className="w-3 h-3 text-white/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                                         </svg>
                                     </div>
