@@ -63,14 +63,14 @@ const CheckCircleIcon = () => (
 
 /**
  * TeamDisplay Component - Handles logo display with consistent sizing
- * Uses fixed square container with max-height/max-width constraints
- * to handle logos of varying aspect ratios
+ * Uses fixed square container to ensure logos of varying aspect ratios
+ * display at the same visual size and align with team names
  */
 const TeamDisplay = ({ team, score, isWinner, isHome, teamColor, position }) => {
     const isLeft = position === 'left';
 
     return (
-        <div className={`flex flex-col items-center ${isLeft ? 'sm:items-end' : 'sm:items-start'}`}>
+        <div className={`flex flex-col items-center`}>
             {/* Home/Away Badge */}
             <div className={`mb-2 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5 ${isHome
                 ? 'bg-gradient-to-r from-red to-red/80 text-white shadow-lg shadow-red/20'
@@ -80,20 +80,37 @@ const TeamDisplay = ({ team, score, isWinner, isHome, teamColor, position }) => 
                 <span>{isHome ? 'HOME' : 'AWAY'}</span>
             </div>
 
-            {/* Logo Container - Fixed square with max constraints for consistent alignment */}
-            <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 flex items-center justify-center mb-2">
-                <div className="w-full h-full flex items-center justify-center">
-                    <TeamLogo
-                        logoUrl={team.logo_url}
-                        teamName={team.name}
-                        primaryColor={teamColor}
-                        size="large"
+            {/* Logo Container - Fixed square container for consistent sizing regardless of logo aspect ratio */}
+            {/* Container enforces size, image fills it with object-fit: contain */}
+            <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 mb-2 flex items-center justify-center">
+                {team.logo_url ? (
+                    <img
+                        src={team.logo_url}
+                        alt={`${team.name} logo`}
+                        className="w-full h-full object-contain"
+                        onError={(e) => {
+                            e.target.style.display = 'none';
+                            const fallback = e.target.parentElement.querySelector('.logo-fallback');
+                            if (fallback) fallback.style.display = 'flex';
+                        }}
                     />
+                ) : null}
+                {/* Fallback initials (shown when no logo or on image error) */}
+                <div
+                    className="logo-fallback rounded-full items-center justify-center font-bebas text-xl sm:text-2xl md:text-3xl w-full h-full"
+                    style={{
+                        display: team.logo_url ? 'none' : 'flex',
+                        background: `linear-gradient(135deg, ${teamColor}15, ${teamColor}25)`,
+                        border: `2px solid ${teamColor}30`,
+                        color: teamColor
+                    }}
+                >
+                    {team.name ? team.name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase() : '?'}
                 </div>
             </div>
 
-            {/* Team Name */}
-            <div className={`font-bebas text-sm sm:text-base md:text-lg lg:text-xl tracking-wide text-center ${isWinner ? 'text-white' : 'text-white/70'
+            {/* Team Name - Centered to align with logo container center */}
+            <div className={`font-bebas text-sm sm:text-base md:text-lg lg:text-xl tracking-wide text-center w-16 sm:w-20 md:w-24 lg:w-28 ${isWinner ? 'text-white' : 'text-white/70'
                 }`}>
                 {team.short_name || team.name}
                 {isWinner && (
